@@ -6,7 +6,7 @@ import HeaderComponent from "@/components/header";
 
 
 
-const HomeView = () => {
+const DashBoardView = () => {
   
 
   return (
@@ -18,4 +18,4 @@ const HomeView = () => {
   );
 };
 
-export default HomeView;
+export default DashBoardView;

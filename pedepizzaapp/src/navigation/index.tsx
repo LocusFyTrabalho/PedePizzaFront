@@ -1,40 +1,18 @@
-import React from "react";
-
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-
-import LoginView from "@/views/loginView/LoginView";
-import HomeView from "@/views/homeView/HomeView";
-
-// Importa a lista de tipos das rotas para garantir que o Stack respeite nossas regras
-import { RootStackParamList } from "@/types/navigationTypes";
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { PublicRoutes } from "@/routes/Public/publicRoute";
+import { PrivateRoutes } from "@/routes/Private/privateRoute";
 
 const AppNavigator = () => {
+  // Estado que diz se o usuário está logado ou não
+  // Mude para 'true' para testar direto as telas de dentro do app (Home)
+  const [userIsLoggedIn, setUserIsLoggedIn] = useState(false);
+
   return (
-    <Stack.Navigator
-     
-      initialRouteName="Login"
-     
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-
-      <Stack.Screen
-        name="Login"
-        component={LoginView}
-      />
-      
-
-      <Stack.Screen
-        name="Home"
-        component={HomeView}
-      />
-    </Stack.Navigator>
+    <NavigationContainer>
+      {userIsLoggedIn ? <PrivateRoutes /> : <PublicRoutes />}
+    </NavigationContainer>
   );
 };
-
 
 export default AppNavigator;

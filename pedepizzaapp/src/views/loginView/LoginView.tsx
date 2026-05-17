@@ -3,7 +3,7 @@ import { View, Text, } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
-import { NavigationProps } from "@/types/navigationTypes";
+import { NavigationProps } from "@/routes/types";
 import ButtonComponent from "@/components/button";
 import InputComponent from "@/components/input";
 
