@@ -8,19 +8,22 @@ import { useNavigation } from "@react-navigation/native";
 const HeaderComponent = () => {
   const navigation = useNavigation<any>();
   return (
-    <View style={styles.container}>
-
+   <View style={styles.container}>
       <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="#333" />
-
       </TouchableOpacity>
 
+      <View style={styles.logoContainer}>
+        <Image 
+          source={require("../../../assets/PedePizzaLogo.png")} 
+          style={styles.logo} 
+          resizeMode="contain"
+        />
+      </View>
 
-      <Image
-        source={require("../../../assets/PedePizzaLogo.png")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <TouchableOpacity style={styles.botaoHistorico} onPress={() => navigation.navigate("Historico")}>
+        <Ionicons name="receipt-outline" size={24} color="#333" />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -4,21 +4,41 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 130, 
-    justifyContent: "center", 
+    height: 140, 
+    flexDirection: "row",
+    justifyContent: "space-between", 
     alignItems: "center", 
-    paddingTop: 30, 
-    paddingBottom: 0, 
+    paddingTop: 50, 
+    paddingHorizontal: 16, 
     backgroundColor: DEFAULT_THEME_COLORS.mainColor,
-    flexDirection:"row"
+    position: "relative",
+  },
+  botaoVoltar: {
+    width: 44,  
+    height: 44, 
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+  },
+  logoContainer: {
+    position: "absolute",
+    top: 50,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
   logo: {
     width: 300,  
-    height: 120,  
+    height: 130,  
   },
-    botaoVoltar: {
-    width: 300,  
-    height: 120,  
+  botaoHistorico: {
+    width: 44,
+    height: 44,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
   },
   headerDivisor: {
     width: "100%", 

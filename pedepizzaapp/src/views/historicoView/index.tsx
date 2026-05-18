@@ -14,7 +14,7 @@ const HistoricoView = () => {
       <HeaderComponent />
       <ButtonComponent title="Voltar" onPress={() => navigation.goBack()} />
       <ButtonComponent title="Pedir novamente" onPress={() => navigation.navigate("Pedido")} />
-      <FooterComponent tipoPerfil="pizzaria" />
+      <FooterComponent tipoPerfil="cliente" />
 
     </View>
   );

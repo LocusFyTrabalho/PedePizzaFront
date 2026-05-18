@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
@@ -24,8 +24,16 @@ const LoginView = () => {
         <View style={styles.container}>
             <View style={styles.emptyContainer}>
 
-                <Text style={styles.subtitle}>ESTÁ COM FOME?</Text>
-                <Text style={styles.subtitle}>PEDE UMA PIZZA AÍ</Text>
+                <View style={styles.logoContainer}>
+                    <Image
+                        source={require("../../../assets/PedePizzaLogo.png")}
+                        style={styles.logo}
+                        resizeMode="contain"
+                    />
+                </View>
+
+                <Text style={styles.title}>ESTÁ COM FOME?</Text>
+                <Text style={styles.title}>PEDE UMA PIZZA AÍ</Text>
 
             </View>
 
@@ -41,8 +49,13 @@ const LoginView = () => {
                     secureTextEntry={true}
                 />
                 <ButtonComponent title="Entrar" onPress={() => navigation.navigate('Home')} />
-                <ButtonComponent title="Avançar para Cadastro" onPress={() => navigation.navigate('Cadastrese')} />
-                <ButtonComponent title={"Esqueci minha senha"} onPress={() => navigation.navigate('RecuperarSenha')}/>
+                <View style={styles.emptyContainer}>
+
+                    <TouchableOpacity onPress={() => navigation.navigate('Cadastrese')} style={{ flexDirection: "row" }}> <Text style={styles.subtitle}>Não tem conta? </Text><Text style={[styles.subtitle, { color: "red" }]}>Cadastre-se</Text> </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}> <Text style={[styles.subtitle, { color: "red" }]}>Esqueci minha senha!</Text> </TouchableOpacity>
+
+
+                </View>
             </View>
 
 
