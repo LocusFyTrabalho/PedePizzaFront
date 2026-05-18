@@ -3,16 +3,28 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 20,
-    height: 330,
-    justifyContent: "flex-end",
+    width: "100%",
+    height: 130, 
+    justifyContent: "center", 
+    alignItems: "center", 
+    paddingTop: 30, 
+    paddingBottom: 0, 
     backgroundColor: DEFAULT_THEME_COLORS.mainColor,
+    flexDirection:"row"
+  },
+  logo: {
+    width: 300,  
+    height: 120,  
+  },
+    botaoVoltar: {
+    width: 300,  
+    height: 120,  
   },
   headerDivisor: {
-    width: "auto",
+    width: "100%", 
     backgroundColor: "#F0F0F0",
     height: 3,
-    marginTop: 20,
+    marginTop: 10,
   },
   title: {
     fontWeight: "bold",

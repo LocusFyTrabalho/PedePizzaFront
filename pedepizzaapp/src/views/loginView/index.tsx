@@ -40,7 +40,7 @@ const LoginView = () => {
                     placeholder="Senha"
                     secureTextEntry={true}
                 />
-                <ButtonComponent title={"Entrar"} onPress={() => navigation.navigate('Home')}/>
+                <ButtonComponent title="Entrar" onPress={() => navigation.navigate('Home')} />
                 <ButtonComponent title="Avançar para Cadastro" onPress={() => navigation.navigate('Cadastrese')} />
                 <ButtonComponent title={"Esqueci minha senha"} onPress={() => navigation.navigate('RecuperarSenha')}/>
             </View>
