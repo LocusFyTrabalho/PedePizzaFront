@@ -3,7 +3,6 @@ import { View, Text, } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
-import { NavigationProps } from "@/routes/types";
 import ButtonComponent from "@/components/button";
 import InputComponent from "@/components/input";
 
@@ -12,8 +11,8 @@ import InputComponent from "@/components/input";
 
 const LoginView = () => {
 
-    const navigation = useNavigation<NavigationProps>();
 
+    const navigation = useNavigation<any>();
 
     const handleLogin = () => {
 
@@ -32,16 +31,18 @@ const LoginView = () => {
 
             <View style={styles.emptyContainer}>
                 <InputComponent
-                    
+
                     placeholder="E-mail"
                 />
 
                 <InputComponent
-                    
-                    placeholder="Senha" 
+
+                    placeholder="Senha"
                     secureTextEntry={true}
                 />
-                <ButtonComponent title={"Entrar"} onPress={handleLogin} />
+                <ButtonComponent title={"Entrar"} onPress={() => navigation.navigate('Home')}/>
+                <ButtonComponent title="Avançar para Cadastro" onPress={() => navigation.navigate('Cadastrese')} />
+                <ButtonComponent title={"Esqueci minha senha"} onPress={() => navigation.navigate('RecuperarSenha')}/>
             </View>
 
 

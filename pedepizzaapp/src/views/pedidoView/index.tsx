@@ -6,7 +6,7 @@ import HeaderComponent from "@/components/header";
 
 
 
-const pedidoView = () => {
+const PedidoView = () => {
   
 
   return (
@@ -18,4 +18,4 @@ const pedidoView = () => {
   );
 };
 
-export default pedidoView;
+export default PedidoView;

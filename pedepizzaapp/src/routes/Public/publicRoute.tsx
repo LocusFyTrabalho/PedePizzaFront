@@ -2,9 +2,9 @@ import React from 'react';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PublicStackParamList } from '@/routes/types';
 
-import LoginView from '@/views/loginView/LoginView';
-import CadastreseView from '@/views/cadastreseView/cadastreseView';
-import RecuperarSenhaView from '@/views/recuperarSenhaView/recuperarSenhaView';
+import LoginView from '@/views/loginView';
+import CadastreseView from '@/views/cadastreseView';
+import RecuperarSenhaView from '@/views/recuperarSenhaView';
 
 const Stack = createNativeStackNavigator<PublicStackParamList>();
 

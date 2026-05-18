@@ -2,14 +2,14 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 
-import HomeView from "@/views/homeView/HomeView";
-import DashBoardView from "@/views/dashBoardView/dashBoardView";
-import CarrinhoView from "@/views/carrinhoView/carrinhoView";
-import PedidoView from "@/views/pedidoView/pedidoView";
-import HistoricoView from "@/views/historicoView/historicoView";
-import PerfilView from "@/views/perfilView/perfilView";
-import AceitarPedidoView from "@/views/aceitarPedidoView/AceitarPedidoView";
-import EditarCardapioView from "@/views/editarCardapioView/editarCardapioView";
+import HomeView from "@/views/homeView";
+import DashBoardView from "@/views/dashBoardView";
+import CarrinhoView from "@/views/carrinhoView";
+import PedidoView from "@/views/pedidoView";
+import HistoricoView from "@/views/historicoView";
+import PerfilView from "@/views/perfilView";
+import AceitarPedidoView from "@/views/aceitarPedidoView";
+import EditarCardapioView from "@/views/editarCardapioView";
 
 
 import { PrivateStackParamList } from "@/routes/types";
