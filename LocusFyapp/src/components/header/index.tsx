@@ -10,20 +10,14 @@ const HeaderComponent = () => {
   return (
    <View style={styles.container}>
       <TouchableOpacity style={styles.botaoVoltar} onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="#333" />
+        <Ionicons name="arrow-back" size={30} color="#000000" />
       </TouchableOpacity>
 
       <View style={styles.logoContainer}>
-        <Image 
-          source={require("../../../assets/PedePizzaLogo.png")} 
-          style={styles.logo} 
-          resizeMode="contain"
-        />
+        
       </View>
 
-      <TouchableOpacity style={styles.botaoHistorico} onPress={() => navigation.navigate("Historico")}>
-        <Ionicons name="receipt-outline" size={24} color="#333" />
-      </TouchableOpacity>
+
     </View>
   );
 };

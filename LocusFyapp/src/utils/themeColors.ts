@@ -1,8 +1,8 @@
 const DEFAULT_THEME_COLORS = {
-  mainColor: "#ac0000",
-  buttonColor: "#00a72a",
+  mainColor: "#032AD7",
+  buttonColor: "#032AD7",
   headerTextColor: "#ffffff",
-  backgroundColor: "#FFE6C7",
+  backgroundColor: "#ffffff",
   textColor: "#ffffff",
 };
 

@@ -13,7 +13,7 @@ const PerfilView = () => {
     <View style={styles.container}>
       <HeaderComponent />
       <ButtonComponent title="Voltar" onPress={() => navigation.goBack()} />
-      <FooterComponent tipoPerfil="cliente" />
+      <FooterComponent tipoPerfil="funcionario" />
     </View>
   );
 };

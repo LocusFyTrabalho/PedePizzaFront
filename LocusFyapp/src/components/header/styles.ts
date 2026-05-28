@@ -8,9 +8,9 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between", 
     alignItems: "center", 
-    paddingTop: 50, 
+    paddingTop: 0, 
     paddingHorizontal: 16, 
-    backgroundColor: DEFAULT_THEME_COLORS.mainColor,
+    backgroundColor: "#ffffff",
     position: "relative",
   },
   botaoVoltar: {

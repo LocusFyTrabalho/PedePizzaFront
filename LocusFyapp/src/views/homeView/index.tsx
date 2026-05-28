@@ -14,9 +14,8 @@ const HomeView = () => {
   return (
     <View style={styles.container}>
       <HeaderComponent />
-      <ButtonComponent title="Histórico" onPress={() => navigation.navigate("Historico")} />
-      <ButtonComponent title="Pedido" onPress={() => navigation.navigate("Pedido")} />
-      <FooterComponent tipoPerfil="cliente" />
+      
+      <FooterComponent tipoPerfil="funcionario" />
 
     </View>
   );

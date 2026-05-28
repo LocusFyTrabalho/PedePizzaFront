@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     left: 0,              // Estica até a borda esquerda
     right: 0,             // Estica até a borda direita
     flexDirection: "row",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#032AD7",
     height: 70,
     borderTopWidth: 1,
     borderTopColor: "#E0E0E0",
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
   },
   menuLabel: {
     fontSize: 12,
-    color: "#333333",
+    color: "#ffffff",
     marginTop: 4,
   },
 });
