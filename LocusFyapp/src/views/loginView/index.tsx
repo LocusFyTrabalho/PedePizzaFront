@@ -21,6 +21,8 @@ const LoginView = () => {
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
+                 
+
 
                 <InputComponent
                     placeholder="Password"
@@ -46,5 +48,7 @@ const LoginView = () => {
         </View>
     );
 };
+
+
 
 export default LoginView;

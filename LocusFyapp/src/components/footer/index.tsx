@@ -6,11 +6,9 @@ import { styles } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import { FONT_SIZE } from "@/utils/themeColors";
 interface FooterProps {
-    tipoPerfil: "funcionario" | "RH" ;
+    tipoPerfil: "funcionario" | "RH" | "gestor";
 }
-// interface FooterProps {
-//     tipoPerfil: "funcionario" | "RH" | "gestor";
-// }
+
 const FooterComponent = ({ tipoPerfil }: FooterProps) => {
     const navigation = useNavigation<any>();
 
@@ -19,18 +17,18 @@ const FooterComponent = ({ tipoPerfil }: FooterProps) => {
             { id: 1, label: "Home", icon: "home", rota: "Home" },
             { id: 2, label: "Horas", icon: "time-outline", rota: "Horas" },
             { id: 3, label: "Perfil", icon: "person-outline", rota: "Perfil" },
-            { id: 4, label: "CadastroUsuario", icon: "", rota: "RegistrarUsuario" },
+            
         ],
         RH: [
-            { id: 3, label: "Cardápio", icon: "restaurant-outline", rota: "EditarCardapio" },
+            { id: 1, label: "CadastroUsuario", icon: "", rota: "RegistrarUsuario" },
             { id: 2, label: "Pedidos", icon: "list-circle-outline", rota: "AceitarPedido" },
-            { id: 1, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
+            { id: 3, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
         ],
-        // gestor: [
-        //     { id: 1, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
-        //     { id: 2, label: "Funcionários", icon: "people-outline", rota: "Funcionarios" },
-        //     { id: 3, label: "Relatórios", icon: "document-text-outline", rota: "Relatorios" },
-        // ]
+        gestor: [
+            { id: 1, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
+            { id: 2, label: "Funcionários", icon: "people-outline", rota: "Funcionarios" },
+            { id: 3, label: "Relatórios", icon: "document-text-outline", rota: "Relatorios" },
+        ]
     };
     const botoesTipoPerfil = menus[tipoPerfil];
 
