@@ -19,6 +19,7 @@ const FooterComponent = ({ tipoPerfil }: FooterProps) => {
             { id: 1, label: "Home", icon: "home", rota: "Home" },
             { id: 2, label: "Horas", icon: "time-outline", rota: "Horas" },
             { id: 3, label: "Perfil", icon: "person-outline", rota: "Perfil" },
+            { id: 4, label: "CadastroUsuario", icon: "", rota: "RegistrarUsuario" },
         ],
         RH: [
             { id: 3, label: "Cardápio", icon: "restaurant-outline", rota: "EditarCardapio" },
