@@ -5,9 +5,9 @@ import { PrivateRoutes } from "@/routes/Private/privateRoute";
 
 const AppNavigator = () => {
 // User logado
-  // const [user, setUser] = useState({ name: '' });
+  const [user, setUser] = useState({ name: '' });
 // USUARIO DESLOGADO
-const [user,setUser]=useState()
+// const [user,setUser]=useState()
 
 
   return (

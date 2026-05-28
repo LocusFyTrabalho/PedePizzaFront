@@ -1,0 +1,194 @@
+import { StyleSheet, Platform } from "react-native";
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 32,
+    paddingTop: Platform.OS === "ios" ? 60 : 40,
+  },
+  headerContainer: {
+    alignItems: "center",
+    marginTop: 10,
+    width: "100%",
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    position: "relative",
+  },
+  logoText: {
+    fontSize: 36,
+    fontWeight: "800",
+    color: "#1A1A1A",
+    textAlign: "center",
+  },
+  iconButton: {
+    position: "absolute",
+    right: 0,
+    padding: 4,
+  },
+  userNameText: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#1D4ED8",
+    textAlign: "center",
+    textDecorationLine: "underline",
+    marginTop: 4,
+  },
+  weekSelectorContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 24,
+    marginBottom: 16,
+  },
+  arrowButton: {
+    borderWidth: 1,
+    borderColor: "#1A1A1A",
+    borderRadius: 8,
+    padding: 4,
+    marginHorizontal: 12,
+  },
+  weekText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#1A1A1A",
+  },
+  cardsContainer: {
+    flex: 1,
+    width: "100%",
+  },
+  scrollContent: {
+    // Espaço no final para que o último card possa passar completamente da área do sumário opaco
+    paddingBottom: 220, 
+  },
+  card: {
+    backgroundColor: "#F9F9F9",
+    borderRadius: 20,
+    padding: 20,
+    alignItems: "center",
+    marginBottom: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 6,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  cardDateText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#1A1A1A",
+    marginBottom: 12,
+  },
+  cardInfoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+    width: "100%",
+  },
+  cardIcon: {
+    marginRight: 8,
+  },
+  cardMainText: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#1A1A1A",
+  },
+  cardSubText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#1A1A1A",
+  },
+  statusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    borderRadius: 20,
+    marginTop: 8,
+    width: "50%",
+  },
+  badgePaid: {
+    backgroundColor: "#00873A",
+  },
+  badgeUnpaid: {
+    backgroundColor: "#E50000",
+  },
+  badgeDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+  dotPaid: {
+    backgroundColor: "#22C55E",
+  },
+  dotUnpaid: {
+    backgroundColor: "#FCA5A5",
+  },
+  badgeText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+  // Novo container que bloqueia e oculta a rolagem de fundo
+  footerSecundario: {
+    position: "absolute",
+    bottom: 48, // Ajustado para repousar exatamente em cima da sua TabBar
+    left: 0,
+    right: 0,
+    backgroundColor: "#FFFFFF", // Fundo branco sólido opaco para tampar os cards ao fundo
+    paddingHorizontal: 32,
+    paddingTop: 8,
+    paddingBottom: 16,
+  },
+  summaryContainer: {
+    flexDirection: "row",
+    backgroundColor: "#F9F9F9",
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#E5E5E5",
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    marginBottom:15,
+    justifyContent: "space-between",
+    width: "100%",
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+  },
+  summaryBlock: {
+    flex: 1,
+    alignItems: "center",
+  },
+  summaryLabel: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#1A1A1A",
+    marginBottom: 6,
+  },
+  summaryValue: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#1A1A1A",
+  },
+});

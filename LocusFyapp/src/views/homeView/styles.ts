@@ -1,26 +1,200 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform, Dimensions } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#FFFFFF",
   },
-  
-  emptyContainer: {
+  headerContainer: {
     alignItems: "center",
-    marginTop: 60,
-    gap: 12,
+    paddingHorizontal: 32,
+    paddingTop: Platform.OS === "ios" ? 60 : 40,
+    backgroundColor: "#FFFFFF",
+    paddingBottom: 16,
   },
-  emptyText: {
+  greetingText: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "#1A1A1A",
+    marginBottom: 16,
+  },
+  statusLabelText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#1A1A1A",
+    marginBottom: 4,
+  },
+  timerText: {
+    fontSize: 48,
+    fontWeight: "800",
+    color: "#1A1A1A",
+    letterSpacing: -1,
+  },
+  dateRow: {
+    flexDirection: "row",
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  dateText: {
     fontSize: 15,
-    color: "#aaa",
-    textAlign: "center",
+    fontWeight: "700",
+    color: "#1A1A1A",
   },
-
-  footer: {
-    paddingHorizontal: 20,
-    paddingBottom: 40,
-    paddingTop: 12,
-    gap: 10,
+  indicatorRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  statusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 8,
+  },
+  dotWorking: {
+    backgroundColor: "#22C55E",
+  },
+  dotOff: {
+    backgroundColor: "#EF4444",
+  },
+  indicatorText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#1A1A1A",
+  },
+  mapContainer: {
+    flex: 1,
+    width: "100%",
+    borderTopWidth: 1,
+    borderColor: "#E5E5E5",
+  },
+  mapMock: {
+    flex: 1,
+    width: "100%",
+    justifyContent: "center", // Centraliza o conteúdo (Swipe) verticalmente no mapa
+    alignItems: "center", // Centraliza horizontalmente
+  },
+  floatingActionBtn: {
+    position: "absolute",
+    bottom: 30,
+    left: 32,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 6,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 5,
+  },
+  btnPause: {
+    backgroundColor: "#EF4444",
+  },
+  btnPlay: {
+    backgroundColor: "#10B981",
+  },
+  swipeContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  swipeTrack: {
+    width: 280,
+    height: 64,
+    borderRadius: 32,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 4,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+  },
+  swipeHandle: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  swipeText: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "700",
+    zIndex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 20,
+    padding: 24,
+    alignItems: "center",
+    elevation: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "800",
+    color: "#1A1A1A",
+    marginBottom: 12,
+  },
+  modalMessage: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#666666",
+    textAlign: "center",
+    marginBottom: 24,
+  },
+  modalButtonsRow: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  modalButtonCancel: {
+    flex: 1,
+    paddingVertical: 12,
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: "#E5E5E5",
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  modalButtonConfirm: {
+    flex: 1,
+    paddingVertical: 12,
+    marginLeft: 8,
+    borderRadius: 12,
+    alignItems: "center",
+  },
+  modalButtonTextCancel: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#666666",
+  },
+  modalButtonTextConfirm: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#FFFFFF",
   },
 });

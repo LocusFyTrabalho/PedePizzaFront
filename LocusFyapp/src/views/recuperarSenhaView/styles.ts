@@ -1,27 +1,73 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffeac2",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 32,
+    paddingTop: Platform.OS === "ios" ? 60 : 40, 
   },
-  
-  emptyContainer: {
+  headerContainer: {
     alignItems: "center",
-    marginTop: 60,
-    gap: 12,
+    marginTop: 10,
   },
-  emptyText: {
-    fontSize: 15,
-    color: "#aaa",
+  logoText: {
+    fontSize: 36,
+    fontWeight: "800",
+    color: "#1A1A1A",
+    marginBottom: 16,
+  },
+  sloganText: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#1A1A1A",
     textAlign: "center",
+    lineHeight: 28,
   },
-
-  footer: {
-    paddingHorizontal: 20,
+  descriptionText: {
+    fontSize: 15,
+    fontWeight: "400",
+    color: "#666666",
+    textAlign: "center",
+    lineHeight: 22,
+    marginTop: 12,
+    paddingHorizontal: 12,
+  },
+  formContainer: {
+    flex: 1,
+    justifyContent: "center",
+    width: "100%",
     paddingBottom: 40,
-    paddingTop: 12,
-    gap: 10,
-    backgroundColor: "#f7f7f7",
+  },
+  footerContainer: {
+    alignItems: "center",
+    marginTop: 24,
+  },
+  footerLinkButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+  },
+  footerText: {
+    fontSize: 15,
+    fontWeight: "600",
+    color: "#1A1A1A",
+  },
+  signUpText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#1D4ED8",
+  },
+  forgotPasswordText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#1D4ED8",
+    marginTop: 8,
+  },
+  backToLoginText: {
+    fontSize: 15,
+    fontWeight: "700",
+    color: "#1D4ED8",
   },
 });

@@ -18,6 +18,8 @@ const LoginView = () => {
             <View style={styles.formContainer}>
                 <InputComponent
                     placeholder="Email"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                 />
 
                 <InputComponent
@@ -25,18 +27,19 @@ const LoginView = () => {
                     secureTextEntry={true}
                 />
 
-                <ButtonComponent 
-                    title="Log In" 
-                    onPress={() => navigation.navigate('Home')} 
+                <ButtonComponent
+                    title="Log In"
+                    onPress={() => navigation.navigate('Home')}
                 />
 
                 <View style={styles.footerContainer}>
-                    <TouchableOpacity 
-                        onPress={() => navigation.navigate('Cadastrese')} 
-                        style={styles.signUpButton}
-                    > 
-                        <Text style={styles.footerText}>Don't have an account? </Text>
-                        <Text style={styles.signUpText}>Sign up</Text> 
+            
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('RecuperarSenha')}
+                        style={styles.footerLinkButton}
+                    >
+                        <Text style={styles.forgotPasswordText}>Forgot my password</Text>
                     </TouchableOpacity>
                 </View>
             </View>
