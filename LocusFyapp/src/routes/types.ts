@@ -8,4 +8,5 @@ export type PrivateStackParamList = {
   Perfil: undefined;
   Horas: undefined;
   RegistrarUsuario: undefined;
+  ListaFuncionario: undefined;
 };

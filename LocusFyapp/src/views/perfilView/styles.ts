@@ -45,6 +45,7 @@ export const styles = StyleSheet.create({
     width: 130,
     height: 130,
     borderRadius: 65, //parece que metade pra ficar bonito, n testei
+    // KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
     backgroundColor: '#E0E0E0',
     
   },

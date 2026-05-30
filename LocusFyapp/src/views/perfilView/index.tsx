@@ -22,7 +22,7 @@ const PerfilView = () => {
 
         </View>
 
-        {/*informações gerais*/}
+
         <View style={styles.infodadosContainer}>
           <Text style={styles.label}>Company</Text>
           <TextInput
