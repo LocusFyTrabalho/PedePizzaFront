@@ -60,29 +60,23 @@ export const styles = StyleSheet.create({
   cardsContainer: {
     flex: 1,
     width: "100%",
+    marginBottom: 16,
   },
   scrollContent: {
-   
-    paddingBottom: 220, 
+
+    paddingBottom: 220,
   },
   card: {
-    backgroundColor: "#F9F9F9",
-    borderRadius: 20,
-    padding: 20,
-    alignItems: "center",
+    backgroundColor: '#fff',
+    paddingInline: 16,
+    borderRadius: 8,
     marginBottom: 16,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    elevation: 4,
   },
+
   cardDateText: {
     fontSize: 15,
     fontWeight: "700",
@@ -94,6 +88,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginBottom: 8,
+    gap: 12,
     width: "100%",
   },
   cardIcon: {
@@ -145,10 +140,10 @@ export const styles = StyleSheet.create({
 
   footerSecundario: {
     position: "absolute",
-    bottom: 48, 
+    bottom: 48,
     left: 0,
     right: 0,
-    backgroundColor: "#FFFFFF", 
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: 32,
     paddingTop: 8,
     paddingBottom: 16,
@@ -161,7 +156,7 @@ export const styles = StyleSheet.create({
     borderColor: "#E5E5E5",
     paddingVertical: 16,
     paddingHorizontal: 12,
-    marginBottom:15,
+    marginBottom: 15,
     justifyContent: "space-between",
     width: "100%",
     ...Platform.select({

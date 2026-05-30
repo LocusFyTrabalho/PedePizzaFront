@@ -5,7 +5,7 @@ import HomeView from "@/views/homeView";
 import PerfilView from "@/views/perfilView";
 import MyHoursView from "@/views/myHoursView";
 import RegisterUserView from "@/views/registrarUsuario";
-import EmployeesListView from "@/views/employeesListView";
+import UsersListView from "@/views/usersListView";
 
 const Stack = createNativeStackNavigator<PrivateStackParamList>();
 
@@ -19,7 +19,7 @@ export const PrivateRoutes = () => {
       <Stack.Screen name="Perfil" component={PerfilView} />
       <Stack.Screen name="Horas" component={MyHoursView} />
       <Stack.Screen name="RegistrarUsuario" component={RegisterUserView} />
-      <Stack.Screen name="ListaFuncionario" component={EmployeesListView} />
+      <Stack.Screen name="ListaUsuario" component={UsersListView} />
     </Stack.Navigator>
   );
 };
