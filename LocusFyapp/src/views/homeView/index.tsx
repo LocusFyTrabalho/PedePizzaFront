@@ -4,12 +4,13 @@ import { useNavigation } from "@react-navigation/native";
 import { Clock, Play, Pause, ChevronRight, ChevronLeft } from "lucide-react-native";
 import { styles } from "./styles";
 import FooterComponent from "@/components/footer";
+import FooterComponentTemp from "@/components/footertemp/footer";
 
 const HomeView = () => {
     const navigation = useNavigation<any>();
     
     const [working, setWorking] = useState(true);
-    const [seconds, setSeconds] = useState(25969); // 07:12:49 em segundos
+    const [seconds, setSeconds] = useState(25969); 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [pendingAction, setPendingAction] = useState<"in" | "out" | null>(null);
 
@@ -17,7 +18,7 @@ const HomeView = () => {
     const handleSize = 56;
     const swipeRange = buttonWidth - handleSize - 8;
     
-    // Valor animado que controla a posição X do botão deslizante
+
     const pan = useRef(new Animated.Value(working ? swipeRange : 0)).current;
 
     useEffect(() => {
@@ -122,25 +123,8 @@ const HomeView = () => {
             </View>
 
             <View style={styles.mapContainer}>
-                <ImageBackground
-                    source={{ uri: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-71.4925,42.2743,12,0/400x500?access_token=mock' }}
-                    style={styles.mapMock}
-                    resizeMode="cover"
-                >
-                    {/* Botão de pausa flutuante no canto inferior */}
-                    <TouchableOpacity 
-                        style={[styles.floatingActionBtn, working ? styles.btnPause : styles.btnPlay]}
-                        onPress={() => {
-                            setPendingAction(working ? "out" : "in");
-                            setShowConfirmModal(true);
-                        }}
-                    >
-                        {working ? (
-                            <Pause size={24} color="#FFFFFF" />
-                        ) : (
-                            <Play size={24} color="#FFFFFF" style={{ marginLeft: 3 }} />
-                        )}
-                    </TouchableOpacity>
+                
+
 
                     {/* Container do Slider Centralizado */}
                     <View style={styles.swipeContainer}>
@@ -164,7 +148,7 @@ const HomeView = () => {
                             </Text>
                         </View>
                     </View>
-                </ImageBackground>
+                
             </View>
 
             {}
@@ -196,6 +180,8 @@ const HomeView = () => {
             </Modal>
 
             <FooterComponent tipoPerfil="funcionario" />
+            <FooterComponentTemp tipoPerfil="temp" />
+
         </View>
     );
 };
