@@ -47,7 +47,7 @@ const HomeView = () => {
             Animated.spring(pan, { toValue: 0, useNativeDriver: true }).start();
         }
         setShowConfirmModal(false);
-        setTimeout(()=>{setPendingAction(null)}, 350)
+        setPendingAction(null);
     };
 
     const handleCancelAction = () => {
@@ -57,7 +57,7 @@ const HomeView = () => {
             useNativeDriver: true,
         }).start();
         setShowConfirmModal(false);
-        setTimeout(()=>{setPendingAction(null)}, 350)
+        setPendingAction(null);
     };
 
     const panResponder = useRef(

@@ -14,20 +14,20 @@ const FooterComponent = ({ tipoPerfil }: FooterProps) => {
 
     const menus = {
         funcionario: [
-            { id: 1, label: "Home", icon: "home-outline", rota: "Home" },
-            { id: 2, label: "Hours", icon: "time-outline", rota: "Horas" },
-            { id: 3, label: "Profile", icon: "person-outline", rota: "Perfil" },
+            { id: 1, label: "Home", icon: "home", rota: "Home" },
+            { id: 2, label: "Horas", icon: "time-outline", rota: "Horas" },
+            { id: 3, label: "Perfil", icon: "person-outline", rota: "Perfil" },
             
         ],
         RH: [
-            { id: 1, label: "Register User", icon: "person-add-outline", rota: "RegistrarUsuario" },
-            { id: 2, label: "Emplooyes list", icon: "clipboard-outline", rota: "AceitarPedido" },
-           // { id: 3, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
+            { id: 1, label: "CadastroUsuario", icon: "", rota: "RegistrarUsuario" },
+            { id: 2, label: "Pedidos", icon: "list-circle-outline", rota: "AceitarPedido" },
+            { id: 3, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
         ],
         gestor: [
-            { id: 1, label: "Register User", icon: "person-add-outline", rota: "Dashboard" },
-            { id: 2, label: "Emplooyes list", icon: "clipboard-outline", rota: "Funcionarios" },
-            { id: 3, label: "Payment", icon: "cash-outline", rota: "Relatorios" },
+            { id: 1, label: "Dashboard", icon: "bar-chart-outline", rota: "Dashboard" },
+            { id: 2, label: "Funcionários", icon: "people-outline", rota: "Funcionarios" },
+            { id: 3, label: "Relatórios", icon: "document-text-outline", rota: "Relatorios" },
         ]
     };
     const botoesTipoPerfil = menus[tipoPerfil];
