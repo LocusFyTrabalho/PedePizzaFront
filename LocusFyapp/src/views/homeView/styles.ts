@@ -71,8 +71,8 @@ export const styles = StyleSheet.create({
   mapMock: {
     flex: 1,
     width: "100%",
-    justifyContent: "center", // Centraliza o conteúdo (Swipe) verticalmente no mapa
-    alignItems: "center", // Centraliza horizontalmente
+    justifyContent: "center",
+    alignItems: "center", 
   },
   floatingActionBtn: {
     position: "absolute",
