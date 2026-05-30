@@ -2,9 +2,9 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
  container: {
-    bottom: 70,            // Cola ele na borda inferior
-    left: 0,              // Estica até a borda esquerda
-    right: 0,             // Estica até a borda direita
+    bottom: 70,           
+    left: 0,              
+    right: 0,             
     flexDirection: "row",
     backgroundColor: "#032AD7",
     height: 70,
