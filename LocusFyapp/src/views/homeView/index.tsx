@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Animated, Pressable, StyleSheet, TouchableOpacity } from "react-native"; // TouchableOpacity corrigido
+import { View, Text, Animated, Pressable, StyleSheet, TouchableOpacity } from "react-native"; 
 import { Clock } from "lucide-react-native";
-import { styles } from "./styles"; 
-import FooterComponent from "@/components/footer";
-import FooterComponentTemp from "@/components/footertemp/footer";
 import { CustomModal } from "@/components/CustomModal";
+import FooterComponentTemp from "@/components/footertemp/footer";
 
-const HOLD_DURATION = 5000; 
+const HOLD_DURATION = 2000; 
 
 const HomeView = () => {
     const [working, setWorking] = useState<boolean>(false);
     const [seconds, setSeconds] = useState<number>(0);
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     
-    // Cronômetro
     useEffect(() => {
         let interval: ReturnType<typeof setInterval>;
         if (working) {
@@ -29,9 +26,6 @@ const HomeView = () => {
         return `${hrs}:${mins}:${secs}`;
     };
 
-    /**
-     * LÓGICA DO BOTÃO COM ANIMAÇÃO
-     */
     const progress = useRef(new Animated.Value(0)).current;
 
     const handlePressIn = () => {
@@ -47,7 +41,6 @@ const HomeView = () => {
     };
 
     const handlePressOut = () => {
-        // Se soltar antes de 5s, para a animação e reseta
         progress.stopAnimation();
         Animated.timing(progress, {
             toValue: 0,
@@ -59,12 +52,12 @@ const HomeView = () => {
     const handleConfirmAction = () => {
         setWorking(!working);
         setShowConfirmModal(false);
-        progress.setValue(0); // Reseta a barra ao confirmar
+        progress.setValue(0); 
     };
 
     const handleCancelAction = () => {
         setShowConfirmModal(false);
-        progress.setValue(0); // Reseta a barra ao cancelar
+        progress.setValue(0); 
     };
 
     const widthProgress = progress.interpolate({
@@ -73,12 +66,12 @@ const HomeView = () => {
     });
 
     return (
-        <View style={{ flex: 1, backgroundColor: styles.container?.backgroundColor || "#FFFFFF" }}>
-            
-            <View style={[styles.headerContainer, { zIndex: 10 }]}>
-                <Text style={styles.greetingText}>Good Morning, John</Text>
-                <Text style={styles.statusLabelText}>{working ? "Working for" : "Off Duty"}</Text>
-                <Text style={styles.timerText}>{formatTime(seconds)}</Text>
+        <View style={localStyles.screenContainer}>
+            {/* Header Isolado com estilos locais garantidos */}
+            <View style={localStyles.headerContainer}>
+                <Text style={localStyles.greetingText}>Good Morning, John</Text>
+                <Text style={localStyles.statusLabelText}>{working ? "Working for" : "Off Duty"}</Text>
+                <Text style={localStyles.timerText}>{formatTime(seconds)}</Text>
             </View>
 
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -115,13 +108,18 @@ const HomeView = () => {
                 </View>
             </CustomModal>
 
-            <FooterComponent tipoPerfil="funcionario" />
+            {/* Rodapé Temporário que vai chamar as rotas */}
             <FooterComponentTemp tipoPerfil="temp" />
         </View>
     );
 };
 
 const localStyles = StyleSheet.create({
+    screenContainer: { flex: 1, backgroundColor: "#F3F4F6", paddingBottom: 80 },
+    headerContainer: { paddingTop: 60, paddingHorizontal: 24, alignItems: "center" },
+    greetingText: { fontSize: 20, fontWeight: "bold", color: "#1F2937" },
+    statusLabelText: { fontSize: 14, color: "#6B7280", marginTop: 4 },
+    timerText: { fontSize: 36, fontWeight: "bold", color: "#111827", marginTop: 8 },
     holdButtonContainer: { width: 280, height: 64, borderRadius: 32, overflow: "hidden", justifyContent: "center", alignItems: "center" },
     progressFill: { position: "absolute", left: 0, top: 0, bottom: 0 },
     buttonContent: { flexDirection: "row", alignItems: "center", gap: 12 },

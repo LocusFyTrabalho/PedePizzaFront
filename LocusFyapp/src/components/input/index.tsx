@@ -18,6 +18,7 @@ const InputComponent = ({
   required = false,
   style,
   inputStyle,
+  editable = true, // valor padrão é verdadeiro
   ...rest
 }: Props) => {
   const [isFocado, setIsFocado] = useState(false);
@@ -27,17 +28,20 @@ const InputComponent = ({
       style={[
         styles.container,
         style,
-        isFocado && { borderColor: "#ad0000" }
+        !editable && styles.containerDisabled, // Fundo cinza se não for editável
+        isFocado && editable && { borderColor: "#1D4ED8" } // Borda azul do sistema ao focar
       ]}
     >
       <TextInput
         style={[
           styles.input,
           inputStyle,
+          !editable && styles.inputDisabled,
           { ...({ outlineStyle: "none" } as any) }
         ]}
-        placeholderTextColor="#c4c4c4"
-        selectionColor="#ed4f0b"
+        placeholderTextColor="#A3A3A3"
+        selectionColor="#1D4ED8"
+        editable={editable}
         onFocus={() => setIsFocado(true)}
         onBlur={() => setIsFocado(false)}
         {...rest}

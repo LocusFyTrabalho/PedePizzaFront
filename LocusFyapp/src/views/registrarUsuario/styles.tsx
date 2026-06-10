@@ -8,8 +8,8 @@ export const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: "center",
-    paddingHorizontal: 32,
-    marginBottom: 20,
+    paddingHorizontal: 24,
+    marginBottom: 10,
   },
   titleRow: {
     flexDirection: "row",
@@ -37,40 +37,24 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 4,
   },
-  descriptionText: {
-    fontSize: 14,
-    fontWeight: "400",
-    color: "#666666",
-    textAlign: "center",
-    lineHeight: 20,
-    marginTop: 8,
-    paddingHorizontal: 16,
-  },
   formScrollView: {
     flex: 1,
     width: "100%",
-    paddingHorizontal: 32,
+    paddingHorizontal: 24,
   },
   scrollContent: {
     paddingTop: 10,
     paddingBottom: 100,
   },
-  inputWrapper: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomWidth: 1,
-    borderBottomColor: "#E5E5E5",
-    marginBottom: 16,
-  },
-  inputIcon: {
-    marginRight: 10,
-    marginBottom: 4,
-  },
-  inputFlex: {
-    flex: 1,
+  label: {
+    fontSize: 14,
+    color: '#555555',
+    fontWeight: '600',
+    marginBottom: 6,
+    marginTop: 4,
   },
   buttonContainer: {
-    marginTop: 24,
+    marginTop: 16,
     width: "100%",
   },
 });

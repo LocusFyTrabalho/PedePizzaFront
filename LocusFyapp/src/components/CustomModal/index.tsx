@@ -1,48 +1,39 @@
 import React from "react";
-import { Modal, View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 
-// Definição das propriedades que o modal pode receber
+// 1. Defina a interface (ou tipo) das props
 interface CustomModalProps {
-    visible: boolean;               // Controla se o modal está aberto ou fechado
-    title: string;                  // Título principal do modal
-    onClose: () => void;            // Função executada ao fechar ou cancelar
-    children?: React.ReactNode;     // Permite injetar botões ou layouts customizados dentro do modal
+  visible: boolean;
+  title: string;
+  children: React.ReactNode;
+  onClose: () => void;
 }
 
-export const CustomModal: React.FC<CustomModalProps> = ({
-    visible,
-    title,
-    onClose,
-    children
+// 2. Aplique a interface ao componente
+export const CustomModal: React.FC<CustomModalProps> = ({ 
+  visible, 
+  title, 
+  children, 
+  onClose 
 }) => {
     return (
-        <Modal
-            transparent
-            visible={visible}
-            animationType="fade"
-            onRequestClose={onClose} // Trata o botão "Voltar" do Android
+        <Modal 
+          visible={visible} 
+          transparent={true} 
+          animationType="fade" 
+          onRequestClose={onClose}
         >
-            {/* Fundo escurecido atrás do modal */}
-            <View style={styles.overlay}>
-                
-                {/* Caixa Branca do Modal */}
-                <View style={styles.container}>
-                    
-                    {/* Título Dinâmico */}
+            <TouchableOpacity 
+              style={styles.overlay} 
+              activeOpacity={1} 
+              onPress={onClose}
+            >
+                <View style={styles.container} onStartShouldSetResponder={() => true}>
                     <Text style={styles.title}>{title}</Text>
-                    
-                    {/* Área de conteúdo dinâmico (onde vão entrar seus botões personalizados) */}
-                    <View style={styles.content}>
-                        {children}
-                    </View>
-                    
-                    {/* Botão de Fechar padrão na parte inferior (igual ao layout da imagem) */}
-
-                    
+                    {children}
                 </View>
-                
-            </View>
+            </TouchableOpacity>
         </Modal>
     );
 };

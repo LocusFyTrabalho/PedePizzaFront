@@ -9,4 +9,8 @@ export type PrivateStackParamList = {
   Horas: undefined;
   RegistrarUsuario: undefined;
   ListaUsuario: undefined;
+  // Telas do Gestor adicionadas:
+  Dashboard: undefined;
+  ListaFuncionarios: undefined;
+  PagamentoHoras: undefined;
 };
