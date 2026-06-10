@@ -11,6 +11,16 @@ export const styles = StyleSheet.create({
     paddingTop: Platform.OS === "ios" ? 60 : 40,
     backgroundColor: "#FFFFFF",
     paddingBottom: 16,
+    borderColor: "#E5E5E5", // Borda cinza clara para simular divisão
+    borderBottomWidth: 2,
+
+    // --- ADICIONADO: Sombra do Header ---
+    zIndex: 10, // Garante que a sombra fique por cima do conteúdo central
+    elevation: 4, // Sombra para Android
+    shadowColor: "#000000", // Sombra para iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   greetingText: {
     fontSize: 18,
@@ -65,8 +75,7 @@ export const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
     width: "100%",
-    borderTopWidth: 1,
-    borderColor: "#E5E5E5",
+    // Removida a borda cinza superior antiga que simulava divisão
   },
   mapMock: {
     flex: 1,

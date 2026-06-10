@@ -17,8 +17,9 @@ const FooterComponentTemp = ({ tipoPerfil }: FooterProps) => {
             { id: 1, label: "Home", icon: "home-outline", rota: "Home" },
             { id: 2, label: "Hours", icon: "time-outline", rota: "Horas" },
             { id: 3, label: "Profile", icon: "person-outline", rota: "Perfil" },
-            { id: 4, label: "User Registration", icon: "person-add-outline", rota: "RegistrarUsuario" },
+            { id: 4, label: "Users Registration", icon: "person-add-outline", rota: "RegistrarUsuario" },
             { id: 5, label: "Users List", icon: "people-outline", rota: "ListaUsuario" },
+
         ],
     };
     const botoesTipoPerfil = menus[tipoPerfil];

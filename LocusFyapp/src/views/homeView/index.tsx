@@ -1,189 +1,133 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, TouchableOpacity, Animated, PanResponder, ImageBackground, Modal } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Clock, Play, Pause, ChevronRight, ChevronLeft } from "lucide-react-native";
-import { styles } from "./styles";
+import { View, Text, Animated, Pressable, StyleSheet, TouchableOpacity } from "react-native"; // TouchableOpacity corrigido
+import { Clock } from "lucide-react-native";
+import { styles } from "./styles"; 
 import FooterComponent from "@/components/footer";
 import FooterComponentTemp from "@/components/footertemp/footer";
+import { CustomModal } from "@/components/CustomModal";
+
+const HOLD_DURATION = 5000; 
 
 const HomeView = () => {
-    const navigation = useNavigation<any>();
+    const [working, setWorking] = useState<boolean>(false);
+    const [seconds, setSeconds] = useState<number>(0);
+    const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     
-    const [working, setWorking] = useState(true);
-    const [seconds, setSeconds] = useState(25969); 
-    const [showConfirmModal, setShowConfirmModal] = useState(false);
-    const [pendingAction, setPendingAction] = useState<"in" | "out" | null>(null);
-
-    const buttonWidth = 280;
-    const handleSize = 56;
-    const swipeRange = buttonWidth - handleSize - 8;
-    
-
-    const pan = useRef(new Animated.Value(working ? swipeRange : 0)).current;
-
+    // Cronômetro
     useEffect(() => {
-        let interval: any;
+        let interval: ReturnType<typeof setInterval>;
         if (working) {
-            interval = setInterval(() => {
-                setSeconds((prev) => prev + 1);
-            }, 1000);
+            interval = setInterval(() => setSeconds((prev) => prev + 1), 1000);
         }
         return () => clearInterval(interval);
     }, [working]);
 
-    const formatTime = (totalSeconds: number) => {
-        const hrs = Math.floor(totalSeconds / 3600);
-        const mins = Math.floor((totalSeconds % 3600) / 60);
-        const secs = totalSeconds % 60;
-        return `${hrs.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+    const formatTime = (totalSeconds: number): string => {
+        const hrs = Math.floor(totalSeconds / 3600).toString().padStart(2, "0");
+        const mins = Math.floor((totalSeconds % 3600) / 60).toString().padStart(2, "0");
+        const secs = (totalSeconds % 60).toString().padStart(2, "0");
+        return `${hrs}:${mins}:${secs}`;
+    };
+
+    /**
+     * LÓGICA DO BOTÃO COM ANIMAÇÃO
+     */
+    const progress = useRef(new Animated.Value(0)).current;
+
+    const handlePressIn = () => {
+        Animated.timing(progress, {
+            toValue: 1,
+            duration: HOLD_DURATION,
+            useNativeDriver: false,
+        }).start(({ finished }) => {
+            if (finished) {
+                setShowConfirmModal(true);
+            }
+        });
+    };
+
+    const handlePressOut = () => {
+        // Se soltar antes de 5s, para a animação e reseta
+        progress.stopAnimation();
+        Animated.timing(progress, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: false,
+        }).start();
     };
 
     const handleConfirmAction = () => {
-        if (pendingAction === "in") {
-            setWorking(true);
-            Animated.spring(pan, { toValue: swipeRange, useNativeDriver: true }).start();
-        } else if (pendingAction === "out") {
-            setWorking(false);
-            Animated.spring(pan, { toValue: 0, useNativeDriver: true }).start();
-        }
+        setWorking(!working);
         setShowConfirmModal(false);
-        setTimeout(()=>{setPendingAction(null)}, 350)
+        progress.setValue(0); // Reseta a barra ao confirmar
     };
 
     const handleCancelAction = () => {
-        // Devolve o slider para sua posição de origem original
-        Animated.spring(pan, {
-            toValue: working ? swipeRange : 0,
-            useNativeDriver: true,
-        }).start();
         setShowConfirmModal(false);
-        setTimeout(()=>{setPendingAction(null)}, 350)
+        progress.setValue(0); // Reseta a barra ao cancelar
     };
 
-    const panResponder = useRef(
-        PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onPanResponderMove: (_, gestureState) => {
-                if (!working) {
-                    // Puxar para a direita (Entrar no serviço)
-                    if (gestureState.dx >= 0 && gestureState.dx <= swipeRange) {
-                        pan.setValue(gestureState.dx);
-                    }
-                } else {
-                    // Puxar para a esquerda (Sair do serviço)
-                    const newX = swipeRange + gestureState.dx;
-                    if (newX >= 0 && newX <= swipeRange) {
-                        pan.setValue(newX);
-                    }
-                }
-            },
-            onPanResponderRelease: (_, gestureState) => {
-                if (!working) {
-                    // Lógica para confirmar entrada (Slide para a direita)
-                    if (gestureState.dx >= swipeRange * 0.6) {
-                        setPendingAction("in");
-                        setShowConfirmModal(true);
-                    } else {
-                        Animated.spring(pan, { toValue: 0, useNativeDriver: true }).start();
-                    }
-                } else {
-                    // Lógica para confirmar saída (Slide para a esquerda)
-                    const endPosition = swipeRange + gestureState.dx;
-                    if (endPosition <= swipeRange * 0.4) {
-                        setPendingAction("out");
-                        setShowConfirmModal(true);
-                    } else {
-                        Animated.spring(pan, { toValue: swipeRange, useNativeDriver: true }).start();
-                    }
-                }
-            },
-        })
-    ).current;
+    const widthProgress = progress.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0%", "100%"]
+    });
 
     return (
-        <View style={styles.container}>
-            <View style={styles.headerContainer}>
+        <View style={{ flex: 1, backgroundColor: styles.container?.backgroundColor || "#FFFFFF" }}>
+            
+            <View style={[styles.headerContainer, { zIndex: 10 }]}>
                 <Text style={styles.greetingText}>Good Morning, John</Text>
-                <Text style={styles.statusLabelText}>
-                    {working ? "Working for" : "Off Duty"}
-                </Text>
+                <Text style={styles.statusLabelText}>{working ? "Working for" : "Off Duty"}</Text>
                 <Text style={styles.timerText}>{formatTime(seconds)}</Text>
-                
-                <View style={styles.dateRow}>
-                    <Text style={styles.dateText}>Monday</Text>
-                    <Text style={[styles.dateText, { marginLeft: 16 }]}>March 8</Text>
-                </View>
-
-                <View style={styles.indicatorRow}>
-                    <View style={[styles.statusDot, working ? styles.dotWorking : styles.dotOff]} />
-                    <Text style={styles.indicatorText}>
-                        {working ? "Working" : "Not Working"}
-                    </Text>
-                </View>
             </View>
 
-            <View style={styles.mapContainer}>
-                
-
-
-                    {/* Container do Slider Centralizado */}
-                    <View style={styles.swipeContainer}>
-                        <View style={[styles.swipeTrack, { backgroundColor: working ? "#FEE2E2" : "#D1FAE5" }]}>
-                            <Animated.View
-                                {...panResponder.panHandlers}
-                                style={[
-                                    styles.swipeHandle,
-                                    { transform: [{ translateX: pan }] },
-                                    { backgroundColor: working ? "#EF4444" : "#10B981" }
-                                ]}
-                            >
-                                {working ? (
-                                    <ChevronLeft size={28} color="#FFFFFF" />
-                                ) : (
-                                    <ChevronRight size={28} color="#FFFFFF" />
-                                )}
-                            </Animated.View>
-                            <Text style={[styles.swipeText, { color: working ? "#991B1B" : "#065F46" }]}>
-                                {working ? "Slide Left to Clock Out" : "Slide Right to Clock In"}
-                            </Text>
-                        </View>
-                    </View>
-                
-            </View>
-
-            {}
-            <Modal
-                transparent={true}
-                visible={showConfirmModal}
-                animationType="fade"
-                onRequestClose={handleCancelAction}
-            >
-                <View style={styles.modalOverlay}>
-                    <View style={styles.modalContent}>
-                        <Text style={styles.modalTitle}>Confirm Action</Text>
-                        <Text style={styles.modalMessage}>
-                            Are you sure you want to {pendingAction === "in" ? "Clock In" : "Clock Out"}?
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <Pressable 
+                    onPressIn={handlePressIn} 
+                    onPressOut={handlePressOut}
+                    style={[localStyles.holdButtonContainer, { backgroundColor: working ? "#FEE2E2" : "#D1FAE5" }]}
+                >
+                    <Animated.View style={[localStyles.progressFill, { width: widthProgress, backgroundColor: working ? "#EF4444" : "#10B981" }]} />
+                    <View style={localStyles.buttonContent}>
+                        <Clock size={24} color={working ? "#991B1B" : "#065F46"} />
+                        <Text style={[localStyles.buttonText, { color: working ? "#991B1B" : "#065F46" }]}>
+                            {working ? "Hold to Clock Out" : "Hold to Clock In"}
                         </Text>
-                        <View style={styles.modalButtonsRow}>
-                            <TouchableOpacity style={styles.modalButtonCancel} onPress={handleCancelAction}>
-                                <Text style={styles.modalButtonTextCancel}>Cancel</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity 
-                                style={[styles.modalButtonConfirm, { backgroundColor: pendingAction === "in" ? "#10B981" : "#EF4444" }]} 
-                                onPress={handleConfirmAction}
-                            >
-                                <Text style={styles.modalButtonTextConfirm}>Confirm</Text>
-                            </TouchableOpacity>
-                        </View>
                     </View>
+                </Pressable>
+            </View>
+
+            <CustomModal
+                visible={showConfirmModal}
+                title="Confirmar Ação"
+                onClose={handleCancelAction}
+            >
+                <Text style={{ textAlign: "center", marginBottom: 20, fontSize: 16 }}>
+                    Deseja realmente {working ? "encerrar" : "iniciar"} o seu expediente?
+                </Text>
+                <View style={{ flexDirection: "row", gap: 10 }}>
+                    <TouchableOpacity style={localStyles.btnCancel} onPress={handleCancelAction}>
+                        <Text style={{ color: "#FFF", fontWeight: "bold" }}>Cancelar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={localStyles.btnConfirm} onPress={handleConfirmAction}>
+                        <Text style={{ color: "#FFF", fontWeight: "bold" }}>Confirmar</Text>
+                    </TouchableOpacity>
                 </View>
-            </Modal>
+            </CustomModal>
 
             <FooterComponent tipoPerfil="funcionario" />
             <FooterComponentTemp tipoPerfil="temp" />
-
         </View>
     );
 };
+
+const localStyles = StyleSheet.create({
+    holdButtonContainer: { width: 280, height: 64, borderRadius: 32, overflow: "hidden", justifyContent: "center", alignItems: "center" },
+    progressFill: { position: "absolute", left: 0, top: 0, bottom: 0 },
+    buttonContent: { flexDirection: "row", alignItems: "center", gap: 12 },
+    buttonText: { fontSize: 16, fontWeight: "700" },
+    btnCancel: { flex: 1, padding: 15, backgroundColor: "#EF4444", borderRadius: 10, alignItems: "center" },
+    btnConfirm: { flex: 1, padding: 15, backgroundColor: "#10B981", borderRadius: 10, alignItems: "center" }
+});
 
 export default HomeView;
