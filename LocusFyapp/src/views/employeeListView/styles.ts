@@ -1,13 +1,46 @@
-import { StyleSheet, Platform, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F3F4F6", // Fundo cinza claro padrão
+  },
+  headerContainer: {
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E7EB",
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: "#1E293B",
+  },
+  sloganText: {
+    fontSize: 14,
+    color: "#6B7280",
+    marginTop: 2,
+  },
+  formScrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingTop: 20,
+    paddingBottom: 100, // Espaço extra para o Footer de teste não cobrir o último card
+  },
   employeeCard: {
     backgroundColor: "#FFFFFF",
     borderWidth: 1,
     borderColor: "#E5E5E5",
     borderRadius: 12,
     padding: 16,
-    marginBottom: 20,
+    marginBottom: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -28,5 +61,6 @@ const styles = StyleSheet.create({
     color: "#666666",
     fontWeight: "600",
     marginBottom: 4,
+    marginTop: 8, // Espaço entre os inputs
   },
 });

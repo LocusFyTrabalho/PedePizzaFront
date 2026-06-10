@@ -1,6 +1,40 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#F3F4F6", // Fundo padrão cinza claro
+  },
+  headerContainer: {
+    paddingTop: 60,
+    paddingHorizontal: 24,
+    paddingBottom: 16,
+    backgroundColor: "#FFFFFF",
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E7EB",
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  logoText: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: "#1E293B",
+  },
+  sloganText: {
+    fontSize: 14,
+    color: "#6B7280",
+    marginTop: 2,
+  },
+  formScrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 100, // Margem de segurança para o rodapé flutuante
+  },
   cardTotal: {
     backgroundColor: "#F8FAFC",
     borderWidth: 1,

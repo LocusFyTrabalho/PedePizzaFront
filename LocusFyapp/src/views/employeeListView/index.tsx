@@ -23,17 +23,17 @@ const EmployeeListView = () => {
     const isWorking = item.status === "Working";
 
     return (
-      <View style={localStyles.employeeCard}>
-        <Text style={localStyles.employeeName}>{item.name}</Text>
+      <View style={styles.employeeCard}>
+        <Text style={styles.employeeName}>{item.name}</Text>
         
-        <Text style={localStyles.fieldLabel}>Current Status</Text>
+        <Text style={styles.fieldLabel}>Current Status</Text>
         <InputComponent 
           value={item.status} 
           editable={false} 
           inputStyle={{ color: isWorking ? "#10B981" : "#EF4444", fontWeight: "700" }}
         />
 
-        <Text style={localStyles.fieldLabel}>Last Clock-in Location</Text>
+        <Text style={styles.fieldLabel}>Last Clock-in Location</Text>
         <InputComponent 
           value={item.lastLocation} 
           editable={false} 

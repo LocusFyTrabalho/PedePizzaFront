@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import InputComponent from "@/components/input";
-import FooterComponent from "@/components/footer";
+
+// Importando o footer temporário para testes rápidos
+import FooterComponentTemp from "@/components/footertemp/footer";
 
 interface PaymentEmployee {
   id: string;
@@ -32,13 +34,14 @@ const HourPaymentView = () => {
     const isPaid = item.paymentStatus === "Paid";
 
     return (
-      <View style={localStyles.paymentCard}>
-        <Text style={localStyles.employeeName}>{item.name}</Text>
+      // Corrigido de localStyles para styles
+      <View style={styles.paymentCard}>
+        <Text style={styles.employeeName}>{item.name}</Text>
 
-        <Text style={localStyles.fieldLabel}>Accumulated Hours</Text>
+        <Text style={styles.fieldLabel}>Accumulated Hours</Text>
         <InputComponent value={item.accumulatedHours} editable={false} />
 
-        <Text style={localStyles.fieldLabel}>Payment Status</Text>
+        <Text style={styles.fieldLabel}>Payment Status</Text>
         <InputComponent 
           value={item.paymentStatus} 
           editable={false} 
@@ -50,10 +53,10 @@ const HourPaymentView = () => {
 
         {!isPaid && (
           <TouchableOpacity 
-            style={localStyles.payButton} 
+            style={styles.payButton} 
             onPress={() => handleMarkAsPaid(item.id)}
           >
-            <Text style={localStyles.payButtonText}>Confirm Payment</Text>
+            <Text style={styles.payButtonText}>Confirm Payment</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -73,14 +76,14 @@ const HourPaymentView = () => {
         data={employees}
         keyExtractor={(item) => item.id}
         renderItem={renderPaymentItem}
-        contentContainerStyle={[styles.scrollContent, { paddingHorizontal: 24 }]}
+        contentContainerStyle={styles.scrollContent}
         style={styles.formScrollView}
       />
 
-      <FooterComponent tipoPerfil="gestor" />
+      {/* Menu flutuante do desenvolvedor ativo */}
+      <FooterComponentTemp tipoPerfil="temp" />
     </View>
   );
 };
-
 
 export default HourPaymentView;
