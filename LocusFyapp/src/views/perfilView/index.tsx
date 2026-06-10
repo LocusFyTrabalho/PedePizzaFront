@@ -1,50 +1,49 @@
-import ButtonComponent from "@/components/button";
-import React, { useCallback } from "react";
-import { Text, Image, TouchableOpacity, View, FlatList, _View } from "react-native";
-import { styles } from "./styles";
-import HeaderComponent from "@/components/header";
+import React from "react";
+import { Text, Image, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { styles } from "./styles";
+import InputComponent from "@/components/input";
 import FooterComponent from "@/components/footer";
-import { TextInput } from "react-native";
 
 const PerfilView = () => {
   const navigation = useNavigation<any>();
+
   return (
     <View style={styles.container}>
-      <HeaderComponent />
-      {/*foto de perfil*/}
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content}>
+        
+        {/* Profile Picture Container */}
         <View style={styles.perfilContainer}>
           <Image
-            source={{}}
+            source={{ uri: 'https://via.placeholder.com/130' }} // Placeholder válido para evitar quebra
             style={styles.fotodeperfil}
           />
-
         </View>
 
-
+        {/* Profile Data Inputs */}
         <View style={styles.infodadosContainer}>
           <Text style={styles.label}>Company</Text>
-          <TextInput
-            style={styles.inputDisabled}
-            value="Locusfy"
-            editable={false}
+          <InputComponent 
+            value="Locusfy" 
+            editable={false} 
           />
+
           <Text style={styles.label}>Date of Admission</Text>
-          <Text style={styles.inputDisabled}>2010/10/10</Text>
+          <InputComponent 
+            value="2010/10/10" 
+            editable={false} 
+          />
 
-          <Text style={styles.label}>Accumulated hours</Text>
-          <Text style={styles.infoBox}>10 hours</Text>
-
+          <Text style={styles.label}>Accumulated Hours</Text>
+          <InputComponent 
+            value="10 hours" 
+            editable={false} 
+          />
         </View>
 
-        <FooterComponent tipoPerfil="funcionario" />
-      </View>
+      </ScrollView>
+      <FooterComponent tipoPerfil="funcionario" />
     </View>
-
-
-
-
   );
 };
 
