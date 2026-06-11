@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Animated, Pressable, StyleSheet, TouchableOpacity } from "react-native"; 
 import { Clock } from "lucide-react-native";
 import { CustomModal } from "@/components/CustomModal";
-import FooterComponentTemp from "@/components/footertemp/footer";
+import FooterComponent from "@/components/footer";
 
 const HOLD_DURATION = 2000; 
 
@@ -109,7 +109,7 @@ const HomeView = () => {
             </CustomModal>
 
             {/* Rodapé Temporário que vai chamar as rotas */}
-            <FooterComponentTemp tipoPerfil="temp" />
+            <FooterComponent />
         </View>
     );
 };

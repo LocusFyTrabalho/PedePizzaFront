@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from "react-native";
 import { styles } from "./styles";
 
 // Trocado pelo Footer temporário de desenvolvimento rápido
-import FooterComponentTemp from "@/components/footertemp/footer";
+import  FooterComponent  from "@/components/footer";
 
 const DashboardView = () => {
   // Simulando dados vindo do Spring Boot
@@ -45,7 +45,7 @@ const DashboardView = () => {
       </ScrollView>
 
       {/* Injetado o Rodapé de Desenvolvimento */}
-      <FooterComponentTemp tipoPerfil="temp" />
+      <FooterComponent/>
     </View>
   );
 };

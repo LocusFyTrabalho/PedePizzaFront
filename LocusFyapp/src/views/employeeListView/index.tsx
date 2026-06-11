@@ -59,7 +59,7 @@ const EmployeeListView = () => {
         style={styles.formScrollView}
       />
 
-      <FooterComponent tipoPerfil="gestor" />
+      <FooterComponent/>
     </View>
   );
 };

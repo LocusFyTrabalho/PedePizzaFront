@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { ChevronLeft, ChevronRight, Clock, MapPin, MoreHorizontal } from "lucide-react-native";
 import { styles } from "./styles";
-import FooterComponent from "@/components/footer";
+import  FooterComponent  from "@/components/footer";
 
 const MyHoursView = () => {
     return (
@@ -177,7 +177,7 @@ const MyHoursView = () => {
                 </View>
             </ScrollView>
 
-            <FooterComponent tipoPerfil="funcionario" />
+            <FooterComponent />
         </View>
     );
 };

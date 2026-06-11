@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { PublicRoutes } from "@/routes/Public/publicRoute";
 import { PrivateRoutes } from "@/routes/Private/privateRoute";
+import { AuthContext } from "@/context/AuthContext"; 
 
 const AppNavigator = () => {
-// User logado
-  const [user, setUser] = useState({ name: '' });
-// USUARIO DESLOGADO
-// const [user,setUser]=useState()
-
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
     <NavigationContainer>
-      {user ? <PrivateRoutes /> : <PublicRoutes />}
+      {isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
     </NavigationContainer>
   );
 };

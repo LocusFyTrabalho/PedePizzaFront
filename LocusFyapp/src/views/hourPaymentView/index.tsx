@@ -4,7 +4,7 @@ import { styles } from "./styles";
 import InputComponent from "@/components/input";
 
 // Importando o footer temporário para testes rápidos
-import FooterComponentTemp from "@/components/footertemp/footer";
+import FooterComponent from "@/components/footer";
 
 interface PaymentEmployee {
   id: string;
@@ -81,7 +81,7 @@ const HourPaymentView = () => {
       />
 
       {/* Menu flutuante do desenvolvedor ativo */}
-      <FooterComponentTemp tipoPerfil="temp" />
+      <FooterComponent />
     </View>
   );
 };
