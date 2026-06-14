@@ -32,7 +32,7 @@ export const PrivateRoutes = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* Telas exclusivas de EMPLOYEE */}
-      {user.role === "ROLE_EMPLOYEE" && (
+      {user.role === "EMPLOYEE" && (
         <>
           <Stack.Screen name="Home" component={HomeView} />
           <Stack.Screen name="Perfil" component={PerfilView} />
@@ -41,7 +41,7 @@ export const PrivateRoutes = () => {
       )}
 
       {/* Telas exclusivas de HR */}
-      {user.role === "ROLE_HR" && (
+      {user.role === "HR" && (
         <>
           <Stack.Screen name="ListaUsuario" component={UsersListView} />
           <Stack.Screen name="RegistrarUsuario" component={RegisterUserView} />
@@ -49,7 +49,7 @@ export const PrivateRoutes = () => {
       )}
 
       {/* Telas exclusivas de MANAGER */}
-      {user.role === "ROLE_MANAGER" && (
+      {user.role === "ADMIN" && (
         <>
           <Stack.Screen name="Dashboard" component={DashboardView} />
           <Stack.Screen name="ListaFuncionarios" component={EmployeeListView} />
