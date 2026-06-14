@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import { View, Text, FlatList, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 import InputComponent from "@/components/input";
 import FooterComponent from "@/components/footer";
+import { Ionicons } from "@expo/vector-icons";
 
 interface Employee {
   id: string;
@@ -11,8 +12,8 @@ interface Employee {
   lastLocation: string;
 }
 
-const EmployeeListView = () => {
-  // Simulando a lista de colaboradores do Banco de Dados
+// Recebendo o navigation pelas props do componente
+const EmployeeListView = ({ navigation }: any) => {
   const [employees] = useState<Employee[]>([
     { id: "1", name: "John Doe", status: "Working", lastLocation: "Office Block A" },
     { id: "2", name: "Alice Smith", status: "Not Working", lastLocation: "Home Office" },
@@ -25,19 +26,32 @@ const EmployeeListView = () => {
     return (
       <View style={styles.employeeCard}>
         <Text style={styles.employeeName}>{item.name}</Text>
-        
+
         <Text style={styles.fieldLabel}>Current Status</Text>
-        <InputComponent 
-          value={item.status} 
-          editable={false} 
+        <InputComponent
+          value={item.status}
+          editable={false}
           inputStyle={{ color: isWorking ? "#10B981" : "#EF4444", fontWeight: "700" }}
         />
 
         <Text style={styles.fieldLabel}>Last Clock-in Location</Text>
-        <InputComponent 
-          value={item.lastLocation} 
-          editable={false} 
+        <InputComponent
+          value={item.lastLocation}
+          editable={false}
         />
+
+        {/* Botão que leva para a tela do Mapa */}
+        <TouchableOpacity
+          style={styles.locationButton}
+          onPress={() => navigation.navigate("Mapa", {
+            employeeName: item.name,
+            employeeCoords: (item as any).coords // Passando o objeto com lat e lng
+          })}
+        >
+          <Ionicons name="location-outline" size={20} color="#FFFFFF" />
+          <Text style={styles.locationButtonText}>Ver no Mapa</Text>
+        </TouchableOpacity>
+
       </View>
     );
   };
@@ -59,10 +73,9 @@ const EmployeeListView = () => {
         style={styles.formScrollView}
       />
 
-      <FooterComponent tipoPerfil="gestor" />
+      <FooterComponent />
     </View>
   );
 };
-
 
 export default EmployeeListView;

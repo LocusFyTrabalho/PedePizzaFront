@@ -1,16 +1,20 @@
 import { StyleSheet, Platform } from "react-native";
 
 export const styles = StyleSheet.create({
+  // ==========================================
+  // ESTILOS GERAIS E ESTRUTURAIS (CONTAINERS)
+  // ==========================================
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    paddingHorizontal: 32,
     paddingTop: Platform.OS === "ios" ? 60 : 40,
   },
   headerContainer: {
     alignItems: "center",
     marginTop: 10,
     width: "100%",
+    marginBottom: 10,
+    paddingHorizontal: 24,
   },
   titleRow: {
     flexDirection: "row",
@@ -18,6 +22,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     position: "relative",
+    marginTop: 10,
   },
   logoText: {
     fontSize: 36,
@@ -25,10 +30,98 @@ export const styles = StyleSheet.create({
     color: "#1A1A1A",
     textAlign: "center",
   },
+  
+  // Subtítulo cinza usado nas Listas (Users / Employees)
+  sloganText: {
+    fontSize: 16,
+    color: "#666666",
+    textAlign: "center",
+    marginTop: 4,
+    fontWeight: "500",
+  },
+  // Subtítulo azul e destacado usado nos Formulários/Cadastro
+  sloganTextForm: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#1D4ED8",
+    textAlign: "center",
+    marginTop: 4,
+  },
+
+  // Botões de navegação superiores
+  backButton: {
+    position: "absolute",
+    left: 0,
+    padding: 4,
+  },
   iconButton: {
     position: "absolute",
     right: 0,
     padding: 4,
+  },
+
+  // ScrollViews e Conteúdos espaçados
+  formScrollView: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 24,
+  },
+  scrollContent: {
+    paddingBottom: 220, // Espaço extra largo para listas com footer
+  },
+  scrollContentForm: {
+    paddingTop: 10,
+    paddingBottom: 100, // Espaço otimizado para o formulário
+  },
+
+  // ==========================================
+  // COMPONENTES DE CARD COMPACTOS (LISTAS)
+  // ==========================================
+  card: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 16, 
+    borderRadius: 8,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    elevation: 4,
+  },
+  employeeCard: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    borderRadius: 8,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: "#EDEDED"
+  },
+  employeeName: {
+    fontSize: 20,
+    fontWeight: "700",
+    color: "#1A1A1A",
+  },
+
+  // Labels e Textos auxiliares
+  fieldLabel: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#666666",
+    marginTop: 12,
+    marginBottom: 4,
+    textTransform: "uppercase",
+  },
+  label: {
+    fontSize: 14,
+    color: '#555555',
+    fontWeight: '600',
+    marginBottom: 6,
+    marginTop: 4,
   },
   userNameText: {
     fontSize: 22,
@@ -38,6 +131,10 @@ export const styles = StyleSheet.create({
     textDecorationLine: "underline",
     marginTop: 4,
   },
+
+  // ==========================================
+  // SELETORES, BADGES E PECULIARIDADES DE INFOS
+  // ==========================================
   weekSelectorContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -62,21 +159,6 @@ export const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 16,
   },
-  scrollContent: {
-
-    paddingBottom: 220,
-  },
-  card: {
-    backgroundColor: '#fff',
-    paddingInline: 16,
-    borderRadius: 8,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    elevation: 4,
-  },
-
   cardDateText: {
     fontSize: 15,
     fontWeight: "700",
@@ -138,6 +220,13 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 
+  // ==========================================
+  // BOTÕES E FOOTERS SECUNDÁRIOS
+  // ==========================================
+  buttonContainer: {
+    marginTop: 16,
+    width: "100%",
+  },
   footerSecundario: {
     position: "absolute",
     bottom: 48,

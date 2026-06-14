@@ -8,8 +8,10 @@ interface AuthContextData {
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // Simulando um usuário gestor para você testar as telas dele
-  const [user] = useState({ role: "ROLE_MANAGER" as const });
+
+const [user] = useState({ role: "ROLE_MANAGER" as const });
+// const [user] = useState({ role: "ROLE_EMPLOYEE" as const });
+// const [user] = useState({ role: "ROLE_HR" as const });
 
   return (
     <AuthContext.Provider value={{ isAuthenticated: true, user }}>
