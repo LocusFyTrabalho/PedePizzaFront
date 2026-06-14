@@ -1,40 +1,49 @@
 import React, { useContext, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal } from "react-native";
 import { styles } from "./styles"; 
 import { Ionicons } from "@expo/vector-icons";
 import { UserContext } from "@/context/UserContext";
 import FooterComponent from "@/components/footer";
 
 const HourPaymentView = () => {
-  // Consumindo a lista de usuários reais cadastrados pelo RH
   const { users } = useContext(UserContext);
 
-  // Estado local para controlar quais IDs já foram marcados como pagos neste ciclo
+  // Controle do fluxo do Modal de confirmação
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<{ id: string; name: string; amount: number } | null>(null);
   const [paidUsersList, setPaidUsersList] = useState<string[]>([]);
 
-  const handleMarkAsPaid = (id: string) => {
-    setPaidUsersList((prev) => [...prev, id]);
+  // Abre o modal passando os dados do funcionário selecionado
+  const handleOpenConfirmation = (id: string, name: string, amount: number) => {
+    setSelectedEmployee({ id, name, amount });
+    setIsModalVisible(true);
   };
 
-  // Mapeia os usuários do contexto para a estrutura de pagamentos
-  const paymentEmployees = users.map((user, index) => {
-    const isPaidLocal = paidUsersList.includes(user.id);
-    
-    // Converte a string hourlyRate do contexto para número (padrão 0 se falhar)
-    const rate = parseFloat(user.hourlyRate) || 0;
-    
-    // Gera horas acumuladas fictícias baseadas no index para exibição em tela
-    const hours = 120 + (index * 15); 
+  // Confirma o pagamento de fato dentro do Modal
+  const handleConfirmPayment = () => {
+    if (selectedEmployee) {
+      setPaidUsersList((prev) => [...prev, selectedEmployee.id]);
+    }
+    setIsModalVisible(false);
+    setSelectedEmployee(null);
+  };
 
-    return {
-      id: user.id,
-      name: user.name,
-      accumulatedHours: hours,
-      hourlyRate: rate,
-      // Se já foi clicado localmente, assume "Paid", senão usa lógica padrão baseada no index
-      paymentStatus: isPaidLocal ? ("Paid" as const) : (index % 2 === 0 ? ("Paid" as const) : ("Not Paid" as const)),
-    };
-  });
+  // Filtra e mapeia os funcionários (ROLE_EMPLOYEE)
+  const paymentEmployees = users
+    .filter((user) => user.role === "ROLE_EMPLOYEE")
+    .map((user, index) => {
+      const isPaidLocal = paidUsersList.includes(user.id);
+      const rate = parseFloat(user.hourlyRate) || 0;
+      const hours = 120 + (index * 15); 
+
+      return {
+        id: user.id,
+        name: user.name,
+        accumulatedHours: hours,
+        hourlyRate: rate,
+        paymentStatus: isPaidLocal ? ("Paid" as const) : (index % 2 === 0 ? ("Paid" as const) : ("Not Paid" as const)),
+      };
+    });
 
   const renderPaymentItem = ({ item }: { item: typeof paymentEmployees[0] }) => {
     const isPaid = item.paymentStatus === "Paid";
@@ -42,19 +51,14 @@ const HourPaymentView = () => {
 
     return (
       <View style={styles.cardContainer}>
-        {/* Nome do Funcionário */}
         <Text style={styles.employeeName}>{item.name}</Text>
-
-        {/* Detalhe do Ganho por Hora dinâmico do Contexto */}
         <Text style={styles.dateText}>Rate: ${item.hourlyRate.toFixed(2)}/h</Text>
 
-        {/* Linha das Horas Acumuladas */}
         <View style={styles.infoRow}>
           <Ionicons name="time-outline" size={22} color="#000" style={styles.icon} />
           <Text style={styles.infoText}>{item.accumulatedHours} hours logged</Text>
         </View>
 
-        {/* Linha do Total a Receber */}
         <View style={styles.infoRow}>
           <Ionicons name="cash-outline" size={22} color="#000" style={styles.icon} />
           <Text style={[styles.infoText, { fontWeight: "700", color: "#00873A" }]}>
@@ -62,19 +66,16 @@ const HourPaymentView = () => {
           </Text>
         </View>
 
-        {/* Rodapé do Card */}
         <View style={styles.cardFooter}>
-          {/* Badge de Status */}
           <View style={[styles.statusBadge, isPaid ? styles.badgePaid : styles.badgeUnpaid]}>
             <View style={[styles.statusDot, isPaid ? styles.dotPaid : styles.dotUnpaid]} />
             <Text style={styles.statusText}>{isPaid ? "Paid" : "Unpaid"}</Text>
           </View>
 
-          {/* Botão de Ação */}
           {!isPaid ? (
             <TouchableOpacity
               style={[styles.mapButton, { backgroundColor: "#1A1A1A", paddingHorizontal: 12, width: "auto" }]}
-              onPress={() => handleMarkAsPaid(item.id)}
+              onPress={() => handleOpenConfirmation(item.id, item.name, totalPayment)}
             >
               <Text style={{ color: "#FFFFFF", fontSize: 12, fontWeight: "700" }}>Confirm Pay</Text>
             </TouchableOpacity>
@@ -98,7 +99,7 @@ const HourPaymentView = () => {
       {paymentEmployees.length === 0 ? (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 40 }}>
           <Text style={{ color: "#6B7280", textAlign: "center", fontSize: 16 }}>
-            No employees registered by HR yet.
+            No eligible employees found for hours payment.
           </Text>
         </View>
       ) : (
@@ -111,6 +112,49 @@ const HourPaymentView = () => {
           showsVerticalScrollIndicator={false}
         />
       )}
+
+      {/* MODAL DE CONFIRMAÇÃO DE PAGAMENTO */}
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(false)}
+      >
+        <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.6)", justifyContent: "center", alignItems: "center", padding: 24 }}>
+          <View style={{ backgroundColor: "#FFFFFF", width: "100%", borderRadius: 24, padding: 24, alignItems: "center" }}>
+            <Ionicons name="alert-circle-outline" size={54} color="#EF4444" style={{ marginBottom: 16 }} />
+            
+            <Text style={{ fontSize: 20, fontWeight: "800", color: "#1F2937", marginBottom: 8, textAlign: "center" }}>
+              Confirm Payment?
+            </Text>
+            
+            <Text style={{ fontSize: 15, color: "#4B5563", textAlign: "center", marginBottom: 24, lineHeight: 22 }}>
+              Are you sure you want to release the payment of{" "}
+              <Text style={{ fontWeight: "700", color: "#000" }}>
+                ${selectedEmployee?.amount.toFixed(2)}
+              </Text>{" "}
+              to <Text style={{ fontWeight: "700", color: "#000" }}>{selectedEmployee?.name}</Text>?
+            </Text>
+
+            {/* Linha de Botões de Ação */}
+            <View style={{ flexDirection: "row", gap: 12, width: "100%" }}>
+              <TouchableOpacity
+                style={{ flex: 1, backgroundColor: "#F3F4F6", paddingVertical: 14, borderRadius: 12, alignItems: "center" }}
+                onPress={() => setIsModalVisible(false)}
+              >
+                <Text style={{ color: "#4B5563", fontWeight: "700", fontSize: 15 }}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{ flex: 1, backgroundColor: "#EF4444", paddingVertical: 14, borderRadius: 12, alignItems: "center" }}
+                onPress={handleConfirmPayment}
+              >
+                <Text style={{ color: "#FFFFFF", fontWeight: "700", fontSize: 15 }}>Confirm</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
 
       <FooterComponent />
     </View>
