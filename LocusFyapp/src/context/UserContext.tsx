@@ -1,17 +1,14 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// Tipagem unificada para o Front, simulando a junção das duas entidades do seu Backend
 export interface UnifiedUserEmployee {
   id: string;
-  // Backend User
   login: string;
   role: "ROLE_EMPLOYEE" | "ROLE_HR" | "ROLE_MANAGER";
   password?: string;
-  // Backend Employee
   name: string;
   email: string;
-  salary: string;
+  hourlyRate: string;
 }
 
 interface UserContextData {

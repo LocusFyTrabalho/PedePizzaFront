@@ -1,57 +1,65 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { styles } from "./styles";
-import InputComponent from "@/components/input";
-import FooterComponent from "@/components/footer";
+import { styles } from "./styles"; 
 import { Ionicons } from "@expo/vector-icons";
+import { UserContext } from "@/context/UserContext";
+import FooterComponent from "@/components/footer";
 
-interface Employee {
-  id: string;
-  name: string;
-  status: "Working" | "Not Working";
-  lastLocation: string;
-}
-
-// Recebendo o navigation pelas props do componente
 const EmployeeListView = ({ navigation }: any) => {
-  const [employees] = useState<Employee[]>([
-    { id: "1", name: "John Doe", status: "Working", lastLocation: "Office Block A" },
-    { id: "2", name: "Alice Smith", status: "Not Working", lastLocation: "Home Office" },
-    { id: "3", name: "Bob Johnson", status: "Working", lastLocation: "External Client HQ" },
-  ]);
+  const { users } = useContext(UserContext);
 
-  const renderEmployeeItem = ({ item }: { item: Employee }) => {
+  // Filtra para garantir que apenas funcionários comuns (ROLE_EMPLOYEE) apareçam na tela de tracking
+  const trackedEmployees = users
+    .filter((user) => user.role === "ROLE_EMPLOYEE")
+    .map((user, index) => {
+      const isWorking = index % 2 === 0; 
+      
+      return {
+        id: user.id,
+        name: user.name,
+        status: isWorking ? ("Working" as const) : ("Not Working" as const),
+        date: "Today - June 14",
+        time: isWorking ? "08:00" : "--:--",
+        lastLocation: isWorking ? "Av. Tancredo Neves, 3500" : "Not Clocked In",
+        coords: { latitude: -19.53052 - (index * 0.005), longitude: -42.623308 + (index * 0.005) }
+      };
+    });
+
+  const renderEmployeeItem = ({ item }: { item: typeof trackedEmployees[0] }) => {
     const isWorking = item.status === "Working";
 
     return (
-      <View style={styles.employeeCard}>
+      <View style={styles.cardContainer}>
         <Text style={styles.employeeName}>{item.name}</Text>
+        <Text style={styles.dateText}>{item.date}</Text>
 
-        <Text style={styles.fieldLabel}>Current Status</Text>
-        <InputComponent
-          value={item.status}
-          editable={false}
-          inputStyle={{ color: isWorking ? "#10B981" : "#EF4444", fontWeight: "700" }}
-        />
+        <View style={styles.infoRow}>
+          <Ionicons name="time-outline" size={22} color="#000" style={styles.icon} />
+          <Text style={styles.infoText}>{item.time}</Text>
+        </View>
 
-        <Text style={styles.fieldLabel}>Last Clock-in Location</Text>
-        <InputComponent
-          value={item.lastLocation}
-          editable={false}
-        />
+        <View style={styles.infoRow}>
+          <Ionicons name="location-outline" size={22} color="#000" style={styles.icon} />
+          <Text style={styles.infoText}>{item.lastLocation}</Text>
+        </View>
 
-        {/* Botão que leva para a tela do Mapa */}
-        <TouchableOpacity
-          style={styles.locationButton}
-          onPress={() => navigation.navigate("Mapa", {
-            employeeName: item.name,
-            employeeCoords: (item as any).coords // Passando o objeto com lat e lng
-          })}
-        >
-          <Ionicons name="location-outline" size={20} color="#FFFFFF" />
-          <Text style={styles.locationButtonText}>Ver no Mapa</Text>
-        </TouchableOpacity>
+        <View style={styles.cardFooter}>
+          <View style={[styles.statusBadge, isWorking ? styles.badgeWorking : styles.badgeNotWorking]}>
+            <View style={[styles.statusDot, isWorking ? styles.dotWorking : styles.dotNotWorking]} />
+            <Text style={styles.statusText}>{item.status}</Text>
+          </View>
 
+          <TouchableOpacity
+            style={[styles.mapButton, !isWorking && { backgroundColor: "#9CA3AF" }]}
+            disabled={!isWorking}
+            onPress={() => navigation.navigate("Mapa", {
+              employeeName: item.name,
+              employeeCoords: item.coords
+            })}
+          >
+            <Ionicons name="map-outline" size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -65,13 +73,22 @@ const EmployeeListView = ({ navigation }: any) => {
         <Text style={styles.sloganText}>Employee Tracking</Text>
       </View>
 
-      <FlatList
-        data={employees}
-        keyExtractor={(item) => item.id}
-        renderItem={renderEmployeeItem}
-        contentContainerStyle={[styles.scrollContent, { paddingHorizontal: 24 }]}
-        style={styles.formScrollView}
-      />
+      {trackedEmployees.length === 0 ? (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 40 }}>
+          <Text style={{ color: "#6B7280", textAlign: "center", fontSize: 16 }}>
+            No employees currently working or registered.
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={trackedEmployees}
+          keyExtractor={(item) => item.id}
+          renderItem={renderEmployeeItem}
+          contentContainerStyle={[styles.scrollContent, { paddingHorizontal: 24, paddingBottom: 120 }]}
+          style={styles.formScrollView}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
 
       <FooterComponent />
     </View>

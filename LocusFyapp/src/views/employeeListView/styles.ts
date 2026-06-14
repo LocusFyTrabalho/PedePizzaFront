@@ -27,56 +27,104 @@ export const styles = StyleSheet.create({
     color: "#6B7280",
     marginTop: 2,
   },
-
-  locationButton: {
-    backgroundColor: "#1D4ED8", 
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    borderRadius: 8,
-    marginTop: 16,
-  },
-  locationButtonText: {
-    color: "#FFFFFF",
-    marginLeft: 8,
-    fontWeight: "bold",
-    fontSize: 14,
-  },
   formScrollView: {
     flex: 1,
   },
   scrollContent: {
     paddingTop: 20,
-    paddingBottom: 100, // Espaço extra para o Footer de teste não cobrir o último card
+    paddingBottom: 120, // Garante que o FooterComponent não cubra o último card
   },
-  employeeCard: {
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#E5E5E5",
-    borderRadius: 12,
-    padding: 16,
+
+  // ==========================================
+  // NOVOS ESTILOS DOS CARDS (PADRÃO ATUALIZADO)
+  // ==========================================
+  cardContainer: {
+    backgroundColor: "#F8F8F8",
+    borderRadius: 24,
+    padding: 20,
     marginBottom: 16,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
-    shadowRadius: 4,
+    shadowRadius: 10,
     elevation: 2,
   },
   employeeName: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#1A1A1A",
-    marginBottom: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: "#F3F4F6",
-    paddingBottom: 6,
+    color: "#000",
+    marginBottom: 8,
   },
-  fieldLabel: {
-    fontSize: 12,
-    color: "#666666",
+  dateText: {
+    fontSize: 15,
     fontWeight: "600",
-    marginBottom: 4,
-    marginTop: 8, // Espaço entre os inputs
+    color: "#000",
+    textAlign: "center",
+    marginBottom: 12,
   },
+  infoRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    paddingLeft: "25%", // Alinhamento centralizado deslocado para a esquerda
+  },
+  icon: {
+    marginRight: 12,
+  },
+  infoText: {
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#000",
+  },
+  cardFooter: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 12,
+  },
+  statusBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    minWidth: 140, // Aumentado um pouco para acomodar o texto "Not Working" sem quebrar linha
+  },
+  badgeWorking: {
+    backgroundColor: "#008744", // Verde escuro para ativo
+  },
+  badgeNotWorking: {
+    backgroundColor: "#6B7280", // Cinza escuro/Neutro para inativo
+  },
+  statusDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginRight: 8,
+  },
+  dotWorking: {
+    backgroundColor: "#00FF66", // Verde neon piscante
+  },
+  dotNotWorking: {
+    backgroundColor: "#E5E7EB", // Ponto claro indicador de offline
+  },
+  statusText: {
+    color: "#FFFFFF",
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  mapButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#007AFF",
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  }
 });

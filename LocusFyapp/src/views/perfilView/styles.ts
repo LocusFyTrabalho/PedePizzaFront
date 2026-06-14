@@ -3,35 +3,32 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F3F4F6",
+    paddingTop: 40
   },
   content: {
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    paddingHorizontal: 24,
     paddingBottom: 100,
   },
   perfilContainer: {
-    marginBottom: 30,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    alignItems: "center",
+    marginTop: 30,
+    marginBottom: 24,
   },
   fotodeperfil: {
     width: 130,
     height: 130,
-    borderRadius: 65, // Metade exata de 130 para ficar perfeitamente redondo!
-    backgroundColor: '#E0E0E0',
+    borderRadius: 65,
+    backgroundColor: "#E5E7EB",
   },
   infodadosContainer: {
-    width: '100%',
+    width: "100%",
   },
   label: {
     fontSize: 14,
-    color: '#555555',
-    fontWeight: '600',
+    fontWeight: "600",
+    color: "#4B5563",
     marginBottom: 6,
+    marginTop: 12,
   },
 });
