@@ -1,194 +1,166 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    paddingHorizontal: 32,
-    paddingTop: Platform.OS === "ios" ? 60 : 40,
-  },
-  headerContainer: {
-    alignItems: "center",
-    marginTop: 10,
-    width: "100%",
-  },
-  titleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-    position: "relative",
-  },
-  logoText: {
-    fontSize: 36,
-    fontWeight: "800",
-    color: "#1A1A1A",
-    textAlign: "center",
-  },
-  iconButton: {
-    position: "absolute",
-    right: 0,
-    padding: 4,
-  },
-  userNameText: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: "#1D4ED8",
-    textAlign: "center",
-    textDecorationLine: "underline",
-    marginTop: 4,
-  },
-  weekSelectorContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 24,
-    marginBottom: 16,
-  },
-  arrowButton: {
-    borderWidth: 1,
-    borderColor: "#1A1A1A",
-    borderRadius: 8,
-    padding: 4,
-    marginHorizontal: 12,
-  },
-  weekText: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#1A1A1A",
-  },
-  cardsContainer: {
-    flex: 1,
-    width: "100%",
-  },
-  scrollContent: {
-   
-    paddingBottom: 220, 
-  },
-  card: {
-    backgroundColor: "#F9F9F9",
-    borderRadius: 20,
-    padding: 20,
-    alignItems: "center",
-    marginBottom: 16,
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 6,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-  cardDateText: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: "#1A1A1A",
-    marginBottom: 12,
-  },
-  cardInfoRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 8,
-    width: "100%",
-  },
-  cardIcon: {
-    marginRight: 8,
-  },
-  cardMainText: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: "#1A1A1A",
-  },
-  cardSubText: {
-    fontSize: 18,
-    fontWeight: "700",
-    color: "#1A1A1A",
-  },
-  statusBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 8,
-    paddingHorizontal: 24,
-    borderRadius: 20,
-    marginTop: 8,
-    width: "50%",
-  },
-  badgePaid: {
-    backgroundColor: "#00873A",
-  },
-  badgeUnpaid: {
-    backgroundColor: "#E50000",
-  },
-  badgeDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginRight: 8,
-  },
-  dotPaid: {
-    backgroundColor: "#22C55E",
-  },
-  dotUnpaid: {
-    backgroundColor: "#FCA5A5",
-  },
-  badgeText: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: "#FFFFFF",
-  },
- 
-  footerSecundario: {
-    position: "absolute",
-    bottom: 48, 
-    left: 0,
-    right: 0,
-    backgroundColor: "#FFFFFF", 
-    paddingHorizontal: 32,
-    paddingTop: 8,
-    paddingBottom: 16,
-  },
-  summaryContainer: {
-    flexDirection: "row",
-    backgroundColor: "#F9F9F9",
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#E5E5E5",
-    paddingVertical: 16,
-    paddingHorizontal: 12,
-    marginBottom:15,
-    justifyContent: "space-between",
-    width: "100%",
-    ...Platform.select({
-      ios: {
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2,
-      },
-    }),
-  },
-  summaryBlock: {
-    flex: 1,
-    alignItems: "center",
-  },
-  summaryLabel: {
-    fontSize: 15,
-    fontWeight: "700",
-    color: "#1A1A1A",
-    marginBottom: 6,
-  },
-  summaryValue: {
-    fontSize: 20,
-    fontWeight: "800",
-    color: "#1A1A1A",
-  },
+    container: {
+        flex: 1,
+        backgroundColor: "#F3F4F6",
+        paddingTop: 40
+    },
+
+    topBarActions: {
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 16
+    },
+
+    logoTextText: {
+        fontSize: 28,
+        fontWeight: "800",
+        color: "#1A1A1A",
+        textAlign: "center"
+    },
+
+    userNameText: {
+        fontSize: 18,
+        fontWeight: "600",
+        color: "#6B7280",
+        textAlign: "center",
+        marginTop: 6
+    },
+
+    arrowButton: {
+        padding: 8,
+        backgroundColor: "#E5E7EB",
+        borderRadius: 8
+    },
+
+    weekSelectorContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 24,
+        marginTop: 24
+    },
+
+    weekText: {
+        fontSize: 18,
+        fontWeight: "700",
+        color: "#1A1A1A"
+    },
+
+    summaryContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingHorizontal: 24,
+        marginTop: 20,
+        gap: 12
+    },
+
+    summaryBlock: {
+        flex: 1,
+        backgroundColor: "#FFFFFF",
+        padding: 16,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: "#E5E7EB"
+    },
+
+    summaryLabel: {
+        fontSize: 14,
+        color: "#6B7280",
+        fontWeight: "600"
+    },
+
+    summaryValue: {
+        fontSize: 22,
+        fontWeight: "800",
+        color: "#1A1A1A",
+        marginTop: 4
+    },
+
+    cardsContainer: {
+        flex: 1,
+        paddingHorizontal: 24,
+        marginTop: 16
+    },
+
+    scrollContent: {
+        paddingBottom: 100
+    },
+
+    card: {
+        backgroundColor: "#FFFFFF",
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: "#E5E7EB"
+    },
+
+    cardDateText: {
+        fontSize: 16,
+        fontWeight: "700",
+        color: "#4B5563",
+        marginBottom: 8
+    },
+
+    cardInfoRow: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 6
+    },
+
+    cardIcon: {
+        marginRight: 8
+    },
+
+    cardMainText: {
+        fontSize: 17,
+        fontWeight: "600",
+        color: "#1A1A1A"
+    },
+
+    cardSubText: {
+        fontSize: 15,
+        color: "#6B7280"
+    },
+
+    statusBadge: {
+        flexDirection: "row",
+        alignItems: "center",
+        alignSelf: "flex-start",
+        paddingVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 12,
+        marginTop: 8
+    },
+
+    badgePaid: {
+        backgroundColor: "#D1FAE5"
+    },
+
+    badgeUnpaid: {
+        backgroundColor: "#FEE2E2"
+    },
+
+    badgeDot: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        marginRight: 6
+    },
+
+    dotPaid: {
+        backgroundColor: "#10B981"
+    },
+
+    dotUnpaid: {
+        backgroundColor: "#EF4444"
+    },
+
+    badgeText: {
+        fontSize: 13,
+        fontWeight: "700",
+        color: "#1F2937"
+    }
 });

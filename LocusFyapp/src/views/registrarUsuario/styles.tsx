@@ -1,9 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
 
 export const styles = StyleSheet.create({
-  // ==========================================
-  // ESTILOS GERAIS E ESTRUTURAIS (CONTAINERS)
-  // ==========================================
+
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
@@ -30,8 +28,7 @@ export const styles = StyleSheet.create({
     color: "#1A1A1A",
     textAlign: "center",
   },
-  
-  // Subtítulo cinza usado nas Listas (Users / Employees)
+
   sloganText: {
     fontSize: 16,
     color: "#666666",
@@ -39,7 +36,7 @@ export const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: "500",
   },
-  // Subtítulo azul e destacado usado nos Formulários/Cadastro
+
   sloganTextForm: {
     fontSize: 22,
     fontWeight: "700",
@@ -48,7 +45,6 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  // Botões de navegação superiores
   backButton: {
     position: "absolute",
     left: 0,
@@ -60,23 +56,21 @@ export const styles = StyleSheet.create({
     padding: 4,
   },
 
-  // ScrollViews e Conteúdos espaçados
+
   formScrollView: {
     flex: 1,
     width: "100%",
     paddingHorizontal: 24,
   },
   scrollContent: {
-    paddingBottom: 220, // Espaço extra largo para listas com footer
+    paddingBottom: 220,
   },
   scrollContentForm: {
     paddingTop: 10,
-    paddingBottom: 100, // Espaço otimizado para o formulário
+    paddingBottom: 100, 
   },
 
-  // ==========================================
-  // COMPONENTES DE CARD COMPACTOS (LISTAS)
-  // ==========================================
+
   card: {
     backgroundColor: '#fff',
     paddingHorizontal: 16, 
@@ -107,7 +101,6 @@ export const styles = StyleSheet.create({
     color: "#1A1A1A",
   },
 
-  // Labels e Textos auxiliares
   fieldLabel: {
     fontSize: 13,
     fontWeight: "700",
@@ -132,9 +125,6 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  // ==========================================
-  // SELETORES, BADGES E PECULIARIDADES DE INFOS
-  // ==========================================
   weekSelectorContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -220,9 +210,7 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
 
-  // ==========================================
-  // BOTÕES E FOOTERS SECUNDÁRIOS
-  // ==========================================
+
   buttonContainer: {
     marginTop: 16,
     width: "100%",

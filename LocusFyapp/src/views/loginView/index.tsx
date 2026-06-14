@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./styles";
 import ButtonComponent from "@/components/button";
@@ -10,19 +10,20 @@ const LoginView = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.headerContainer}>
-                <Text style={styles.logoText}>LocusFy</Text>
-                <Text style={styles.sloganText}>Smart time tracking{"\n"}with location</Text>
-            </View>
-
             <View style={styles.formContainer}>
+
+                <View style={styles.headerContainer}>
+                    <Text style={styles.logoText}>LocusFy</Text>
+                    <Text style={styles.sloganText}> Locate your employees. </Text>
+                    <Text style={styles.sloganText}>  </Text>
+                    
+                </View>
+
                 <InputComponent
                     placeholder="Email"
                     keyboardType="email-address"
                     autoCapitalize="none"
                 />
-                 
-
 
                 <InputComponent
                     placeholder="Password"
@@ -35,8 +36,6 @@ const LoginView = () => {
                 />
 
                 <View style={styles.footerContainer}>
-            
-
                     <TouchableOpacity
                         onPress={() => navigation.navigate('RecuperarSenha')}
                         style={styles.footerLinkButton}
@@ -48,7 +47,5 @@ const LoginView = () => {
         </View>
     );
 };
-
-
 
 export default LoginView;

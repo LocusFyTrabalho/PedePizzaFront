@@ -1,64 +1,127 @@
 import React, { useContext, useState } from "react";
-import { View, Text, FlatList, TouchableOpacity, Alert, Modal } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ScrollView } from "react-native";
 import { UserContext, UnifiedUserEmployee } from "@/context/UserContext";
-import { styles } from "./styles";
+import { CustomModal } from "@/components/CustomModal";
 import FooterComponent from "@/components/footer";
-import InputComponent from "@/components/input"; // 🛠️ Seu componente customizado importado aqui
+import InputComponent from "@/components/input";
+import ButtonComponent from "@/components/button";
 import { MaterialIcons } from "@expo/vector-icons";
+import { styles } from "./styles";
 
 export default function UsersListView() {
   const { users, deleteUser, updateUser } = useContext(UserContext);
 
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [isErrorModalVisible, setIsErrorModalVisible] = useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+  
+  const [errorTitle, setErrorTitle] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [selectedUser, setSelectedUser] = useState<UnifiedUserEmployee | null>(null);
+  
   const [editName, setEditName] = useState("");
   const [editEmail, setEditEmail] = useState("");
-  const [editSalary, setEditSalary] = useState("");
+  const [editHourlyRate, setEditHourlyRate] = useState("");
+  const [editLogin, setEditLogin] = useState("");
+  const [editPassword, setEditPassword] = useState("");
+  const [editRole, setEditRole] = useState<"ROLE_EMPLOYEE" | "ROLE_HR">("ROLE_EMPLOYEE");
 
-  const handleDelete = (id: string, name: string) => {
-    Alert.alert("Remover Registro", `Excluir permanentemente ${name}?`, [
-      { text: "Cancelar", style: "cancel" },
-      { text: "Excluir", style: "destructive", onPress: () => deleteUser(id) },
-    ]);
+  const validateEmail = (text: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(text);
+  };
+
+  const openDeleteModal = (user: UnifiedUserEmployee) => {
+    setSelectedUser(user);
+    setIsDeleteModalVisible(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (selectedUser) {
+      await deleteUser(selectedUser.id);
+      setIsDeleteModalVisible(false);
+      setSelectedUser(null);
+      setSuccessMessage("Record permanently deleted!");
+      setIsSuccessModalVisible(true);
+    }
   };
 
   const openEditModal = (user: UnifiedUserEmployee) => {
     setSelectedUser(user);
     setEditName(user.name);
     setEditEmail(user.email);
-    setEditSalary(user.salary);
+    setEditHourlyRate(user.hourlyRate || "");
+    setEditLogin(user.login || "");
+    setEditPassword("");
+    setEditRole((user.role as "ROLE_EMPLOYEE" | "ROLE_HR") || "ROLE_EMPLOYEE");
     setIsEditModalVisible(true);
   };
 
   const handleSaveEdit = async () => {
     if (selectedUser) {
-      await updateUser(selectedUser.id, { name: editName, email: editEmail, salary: editSalary });
+      if (!editName || !editEmail || !editHourlyRate || !editLogin) {
+        setErrorTitle("Error");
+        setErrorMessage("Please fill in all required fields.");
+        setIsErrorModalVisible(true);
+        return;
+      }
+
+      if (!validateEmail(editEmail)) {
+        setErrorTitle("Error");
+        setErrorMessage("Please enter a valid email address.");
+        setIsErrorModalVisible(true);
+        return;
+      }
+
+      if (editPassword.trim().length > 0 && editPassword.trim().length < 6) {
+        setErrorTitle("Error");
+        setErrorMessage("Password must be at least 6 characters long.");
+        setIsErrorModalVisible(true);
+        return;
+      }
+
+      const updatePayload: any = {
+        name: editName,
+        email: editEmail,
+        hourlyRate: editHourlyRate,
+        login: editLogin,
+        role: editRole
+      };
+
+      if (editPassword.trim().length > 0) {
+        updatePayload.password = editPassword;
+      }
+
+      await updateUser(selectedUser.id, updatePayload);
       setIsEditModalVisible(false);
       setSelectedUser(null);
-      Alert.alert("Sucesso", "Dados atualizados!");
+      setSuccessMessage("Data successfully updated!");
+      setIsSuccessModalVisible(true);
     }
   };
 
   const renderUserItem = ({ item }: { item: UnifiedUserEmployee }) => {
     return (
-      <View style={[styles.card, { paddingVertical: 12, paddingHorizontal: 16, marginBottom: 10 }]}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-          <Text style={{ fontSize: 16, fontWeight: "800", color: "#1A1A1A" }}>{item.name}</Text>
-          
-          <View style={{ flexDirection: "row", gap: 14 }}>
+      <View style={styles.cardItemBody}>
+        <View style={styles.cardHeaderLayout}>
+          <Text style={styles.cardMainTitle}>{item.name}</Text>
+          <View style={styles.actionIconsGroup}>
             <TouchableOpacity onPress={() => openEditModal(item)}>
               <MaterialIcons name="edit" size={18} color="#FFA500" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleDelete(item.id, item.name)}>
+            <TouchableOpacity onPress={() => openDeleteModal(item)}>
               <MaterialIcons name="delete" size={18} color="#EF4444" />
             </TouchableOpacity>
           </View>
         </View>
+
+        <Text style={styles.cardSubDetails}>📧 {item.email} | 👤 {item.login}</Text>
         
-        <Text style={{ fontSize: 13, color: "#555" }}>📧 {item.email} | 👤 {item.login}</Text>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 6, alignItems: "center" }}>
-          <Text style={{ fontSize: 13, fontWeight: "700", color: "#00873A" }}>R$ {item.salary}</Text>
-          <Text style={{ fontSize: 11, fontWeight: "bold", color: "#1D4ED8", backgroundColor: "#EFF6FF", paddingHorizontal: 8, paddingVertical: 2, borderRadius: 4 }}>
+        <View style={styles.cardFooterLayout}>
+          <Text style={styles.cardSalaryValue}>$ {item.hourlyRate}/h</Text>
+          <Text style={styles.roleBadgeLabel}>
             {item.role.replace("ROLE_", "")}
           </Text>
         </View>
@@ -68,62 +131,166 @@ export default function UsersListView() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.logoText}>LocusFy</Text>
-        <Text style={styles.sloganText}>Controle de Usuários</Text>
+      <View style={styles.topBarActions}>
+        <Text style={styles.logoTextText}>Users List</Text>
       </View>
+      <Text style={styles.userNameText}>Management Control</Text>
 
       {users.length === 0 ? (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ color: "#666" }}>Nenhum usuário ou funcionário salvo localmente.</Text>
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyStateText}>No users or employees found locally.</Text>
         </View>
       ) : (
         <FlatList
           data={users}
           keyExtractor={(item) => item.id}
           renderItem={renderUserItem}
-          contentContainerStyle={[styles.scrollContent, { paddingHorizontal: 8, paddingTop: 10 }]}
+          contentContainerStyle={[styles.scrollContent, { paddingHorizontal: 24, paddingTop: 20 }]}
           style={styles.formScrollView}
+          showsVerticalScrollIndicator={false}
         />
       )}
 
-      {/* MODAL DE EDIÇÃO */}
-      <Modal visible={isEditModalVisible} animationType="fade" transparent={true}>
-        <View style={{ flex: 1, justifyContent: "center", backgroundColor: "rgba(0,0,0,0.4)", padding: 20 }}>
-          <View style={{ backgroundColor: "#fff", padding: 20, borderRadius: 8 }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 15 }}>Modificar Cadastro</Text>
-            
-            {/* 🛠️ Aplicando o seu InputComponent com margem inferior para espaçamento */}
-            <InputComponent 
-              placeholder="Nome" 
-              value={editName} 
-              onChangeText={setEditName} 
-              style={{ marginBottom: 12 }} 
-            />
-            
-            <InputComponent 
-              placeholder="Email" 
-              value={editEmail} 
-              onChangeText={setEditEmail} 
-              keyboardType="email-address"
-              autoCapitalize="none"
-              style={{ marginBottom: 12 }} 
-            />
+      <CustomModal
+        visible={isEditModalVisible}
+        title="Modify Registration"
+        onClose={() => setIsEditModalVisible(false)}
+      >
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
+          <Text style={{ fontSize: 12, fontWeight: "700", color: "#1D4ED8", marginBottom: 6, textTransform: "uppercase" }}>Employee Data</Text>
+          <InputComponent
+            placeholder="Name"
+            value={editName}
+            onChangeText={setEditName}
+            style={{ marginBottom: 12 }}
+          />
 
+          <InputComponent
+            placeholder="Email"
+            value={editEmail}
+            onChangeText={setEditEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={{ marginBottom: 12 }}
+          />
 
-            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 10 }}>
-              <TouchableOpacity onPress={() => setIsEditModalVisible(false)} style={{ padding: 12, backgroundColor: "#ccc", borderRadius: 6, width: "48%", alignItems: "center" }}>
-                <Text style={{ fontWeight: "bold" }}>Sair</Text>
+          <InputComponent
+            placeholder="Hourly Rate ($/h)"
+            value={editHourlyRate}
+            onChangeText={setEditHourlyRate}
+            keyboardType="numeric"
+            style={{ marginBottom: 16 }}
+          />
+
+          <Text style={{ fontSize: 12, fontWeight: "700", color: "#1D4ED8", marginBottom: 6, textTransform: "uppercase" }}>User Account</Text>
+          <InputComponent
+            placeholder="Login / Username"
+            value={editLogin}
+            onChangeText={setEditLogin}
+            autoCapitalize="none"
+            style={{ marginBottom: 12 }}
+          />
+
+          <InputComponent
+            placeholder="New Password (Leave blank to keep current)"
+            value={editPassword}
+            onChangeText={setEditPassword}
+            secureTextEntry
+            autoCapitalize="none"
+            style={{ marginBottom: 16 }}
+          />
+
+          <Text style={{ fontSize: 12, fontWeight: "700", color: "#666666", marginBottom: 6, textTransform: "uppercase" }}>Job Level (Role)</Text>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20, gap: 8 }}>
+            {(["ROLE_EMPLOYEE", "ROLE_HR"] as const).map((r) => (
+              <TouchableOpacity 
+                key={r} 
+                onPress={() => setEditRole(r)} 
+                style={{ 
+                  flex: 1, 
+                  padding: 10, 
+                  borderWidth: 1, 
+                  borderRadius: 8, 
+                  alignItems: 'center', 
+                  backgroundColor: editRole === r ? "#1A1A1A" : "#fff", 
+                  borderColor: editRole === r ? "#1A1A1A" : "#ccc" 
+                }}
+              >
+                <Text style={{ color: editRole === r ? "#fff" : "#000", fontSize: 11, fontWeight: "700" }}>
+                  {r.replace("ROLE_", "")}
+                </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleSaveEdit} style={{ padding: 12, backgroundColor: "#1A1A1A", borderRadius: 6, width: "48%", alignItems: "center" }}>
-                <Text style={{ color: "#fff", fontWeight: "bold" }}>Salvar</Text>
-              </TouchableOpacity>
-            </View>
+            ))}
           </View>
-        </View>
-      </Modal>
 
-      <FooterComponent/>
+          <View style={styles.modalActionsWrapper}>
+            <ButtonComponent
+              title="Exit"
+              onPress={() => setIsEditModalVisible(false)}
+              style={styles.btnModalExit}
+            />
+            <ButtonComponent
+              title="Save"
+              onPress={handleSaveEdit}
+              style={styles.btnModalSave}
+            />
+          </View>
+        </ScrollView>
+      </CustomModal>
+
+      <CustomModal
+        visible={isDeleteModalVisible}
+        title="Remove Record"
+        onClose={() => setIsDeleteModalVisible(false)}
+      >
+        <Text style={{ fontSize: 15, color: "#4B5563", marginBottom: 20, textAlign: "center" }}>
+          Permanently delete {selectedUser?.name}?
+        </Text>
+        <View style={styles.modalActionsWrapper}>
+          <ButtonComponent
+            title="Cancel"
+            onPress={() => setIsDeleteModalVisible(false)}
+            style={styles.btnModalExit}
+          />
+          <ButtonComponent
+            title="Delete"
+            onPress={handleConfirmDelete}
+            style={{ flex: 1, backgroundColor: "#EF4444" }}
+          />
+        </View>
+      </CustomModal>
+
+      <CustomModal
+        visible={isErrorModalVisible}
+        title={errorTitle}
+        onClose={() => setIsErrorModalVisible(false)}
+      >
+        <Text style={{ fontSize: 15, color: "#4B5563", marginBottom: 20, textAlign: "center" }}>
+          {errorMessage}
+        </Text>
+        <ButtonComponent
+          title="Ok"
+          onPress={() => setIsErrorModalVisible(false)}
+          style={{ backgroundColor: "#1A1A1A", width: "100%" }}
+        />
+      </CustomModal>
+
+      <CustomModal
+        visible={isSuccessModalVisible}
+        title="Success"
+        onClose={() => setIsSuccessModalVisible(false)}
+      >
+        <Text style={{ fontSize: 15, color: "#4B5563", marginBottom: 20, textAlign: "center" }}>
+          {successMessage}
+        </Text>
+        <ButtonComponent
+          title="Dismiss"
+          onPress={() => setIsSuccessModalVisible(false)}
+          style={{ backgroundColor: "#1A1A1A", width: "100%" }}
+        />
+      </CustomModal>
+
+      <FooterComponent />
     </View>
   );
 }
