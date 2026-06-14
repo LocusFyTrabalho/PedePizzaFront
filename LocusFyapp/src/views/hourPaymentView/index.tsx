@@ -136,7 +136,7 @@ const HourPaymentView = () => {
               to <Text style={{ fontWeight: "700", color: "#000" }}>{selectedEmployee?.name}</Text>?
             </Text>
 
-            {/* Linha de Botões de Ação */}
+            
             <View style={{ flexDirection: "row", gap: 12, width: "100%" }}>
               <TouchableOpacity
                 style={{ flex: 1, backgroundColor: "#F3F4F6", paddingVertical: 14, borderRadius: 12, alignItems: "center" }}
