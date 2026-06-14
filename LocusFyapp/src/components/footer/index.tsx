@@ -11,7 +11,6 @@ import { AuthContext } from "@/context/AuthContext";
 interface MenuItem {
   id: number;
   label: string;
-  // Forma correta de tipar os ícones do Expo Vector Icons
   icon: React.ComponentProps<typeof Ionicons>['name']; 
   rota: keyof PrivateStackParamList;
 }

@@ -9,9 +9,9 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
-// const [user] = useState({ role: "ROLE_MANAGER" as const });
+const [user] = useState({ role: "ROLE_MANAGER" as const });
 // const [user] = useState({ role: "ROLE_EMPLOYEE" as const });
-const [user] = useState({ role: "ROLE_HR" as const });
+// const [user] = useState({ role: "ROLE_HR" as const });
 
   return (
     <AuthContext.Provider value={{ isAuthenticated: true, user }}>

@@ -13,14 +13,14 @@ import UsersListView from "@/views/usersListView";
 import DashboardView from "@/views/dashboardView";
 import EmployeeListView from "@/views/employeeListView";
 import HourPaymentView from "@/views/hourPaymentView";
+import mapView from "@/views/mapView"; 
+import MapView from "react-native-maps";
 
 const Stack = createNativeStackNavigator<PrivateStackParamList>();
 
 export const PrivateRoutes = () => {
   const { user } = useContext(AuthContext);
 
-  // TRAVA DE SEGURANÇA: Se o user ou a role ainda não existirem, mostra um loading 
-  // Isso impede o Navigator de renderizar sem nenhuma tela e ficar em branco
   if (!user || !user.role) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFFFFF' }}>
@@ -54,6 +54,7 @@ export const PrivateRoutes = () => {
           <Stack.Screen name="Dashboard" component={DashboardView} />
           <Stack.Screen name="ListaFuncionarios" component={EmployeeListView} />
           <Stack.Screen name="PagamentoHoras" component={HourPaymentView} />
+          <Stack.Screen name="Mapa" component={mapView} />
         </>
       )}
     </Stack.Navigator>

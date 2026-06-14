@@ -27,6 +27,22 @@ export const styles = StyleSheet.create({
     color: "#6B7280",
     marginTop: 2,
   },
+
+  locationButton: {
+    backgroundColor: "#1D4ED8", 
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginTop: 16,
+  },
+  locationButtonText: {
+    color: "#FFFFFF",
+    marginLeft: 8,
+    fontWeight: "bold",
+    fontSize: 14,
+  },
   formScrollView: {
     flex: 1,
   },
