@@ -4,9 +4,14 @@ import { styles } from "./styles";
 import ButtonComponent from "@/components/button";
 import InputComponent from "@/components/input";
 import { AuthContext } from "@/context/AuthContext";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack"; 
+import { PublicStackParamList } from "@/routes/types";
 
 const LoginView = () => {
     const { login } = useContext(AuthContext);
+
+    const navigation = useNavigation<NativeStackNavigationProp<PublicStackParamList>>();
 
     const [loginInput, setLoginInput] = useState("");
     const [password, setPassword] = useState("");
@@ -14,18 +19,16 @@ const LoginView = () => {
 
     const handleLogin = async () => {
         if (!loginInput || !password) {
-            Alert.alert("Erro", "Preencha login e senha.");
+            Alert.alert("Error", "Please enter both login and password.");
             return;
         }
 
         setLoading(true);
         try {
             await login(loginInput, password);
-            // Não precisa navegar manualmente.
-            // O AppNavigator troca pra área privada quando isAuthenticated vira true.
         } catch (error: any) {
             console.error(error.response?.data || error.message);
-            Alert.alert("Erro", "Login ou senha inválidos.");
+            Alert.alert("Error", "Invalid login or password.");
         } finally {
             setLoading(false);
         }
@@ -54,7 +57,7 @@ const LoginView = () => {
                 />
 
                 <ButtonComponent
-                    title={loading ? "Entrando..." : "Log In"}
+                    title={loading ? "Logging in..." : "Log In"}
                     onPress={handleLogin}
                     disabled={loading}
                 />
@@ -63,7 +66,7 @@ const LoginView = () => {
 
                 <View style={styles.footerContainer}>
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => navigation.navigate("RecuperarSenha")}
                         style={styles.footerLinkButton}
                     >
                         <Text style={styles.forgotPasswordText}>Forgot my password</Text>

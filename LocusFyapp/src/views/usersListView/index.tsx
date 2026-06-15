@@ -200,28 +200,6 @@ export default function UsersListView() {
             style={{ marginBottom: 16 }}
           />
 
-          <Text style={{ fontSize: 12, fontWeight: "700", color: "#666666", marginBottom: 6, textTransform: "uppercase" }}>Job Level (Role)</Text>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20, gap: 8 }}>
-            {(["ROLE_EMPLOYEE", "ROLE_HR"] as const).map((r) => (
-              <TouchableOpacity 
-                key={r} 
-                onPress={() => setEditRole(r)} 
-                style={{ 
-                  flex: 1, 
-                  padding: 10, 
-                  borderWidth: 1, 
-                  borderRadius: 8, 
-                  alignItems: 'center', 
-                  backgroundColor: editRole === r ? "#1A1A1A" : "#fff", 
-                  borderColor: editRole === r ? "#1A1A1A" : "#ccc" 
-                }}
-              >
-                <Text style={{ color: editRole === r ? "#fff" : "#000", fontSize: 11, fontWeight: "700" }}>
-                  {r.replace("ROLE_", "")}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
 
           <View style={styles.modalActionsWrapper}>
             <ButtonComponent

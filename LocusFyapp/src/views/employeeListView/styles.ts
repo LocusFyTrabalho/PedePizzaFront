@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F3F4F6", // Fundo cinza claro padrão
+    backgroundColor: "#F3F4F6", 
   },
   headerContainer: {
     paddingTop: 60,
@@ -32,12 +32,8 @@ export const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingTop: 20,
-    paddingBottom: 120, // Garante que o FooterComponent não cubra o último card
+    paddingBottom: 120, 
   },
-
-  // ==========================================
-  // NOVOS ESTILOS DOS CARDS (PADRÃO ATUALIZADO)
-  // ==========================================
   cardContainer: {
     backgroundColor: "#F8F8F8",
     borderRadius: 24,
@@ -66,7 +62,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-    paddingLeft: "25%", // Alinhamento centralizado deslocado para a esquerda
+    paddingLeft: "25%", 
   },
   icon: {
     marginRight: 12,
@@ -89,13 +85,13 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 20,
     borderRadius: 20,
-    minWidth: 140, // Aumentado um pouco para acomodar o texto "Not Working" sem quebrar linha
+    minWidth: 140, 
   },
   badgeWorking: {
-    backgroundColor: "#008744", // Verde escuro para ativo
+    backgroundColor: "#008744", 
   },
   badgeNotWorking: {
-    backgroundColor: "#6B7280", // Cinza escuro/Neutro para inativo
+    backgroundColor: "#6B7280", 
   },
   statusDot: {
     width: 10,
@@ -104,10 +100,10 @@ export const styles = StyleSheet.create({
     marginRight: 8,
   },
   dotWorking: {
-    backgroundColor: "#00FF66", // Verde neon piscante
+    backgroundColor: "#00FF66", 
   },
   dotNotWorking: {
-    backgroundColor: "#E5E7EB", // Ponto claro indicador de offline
+    backgroundColor: "#E5E7EB", 
   },
   statusText: {
     color: "#FFFFFF",

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F3F4F6", // Fundo padrão cinza claro
+    backgroundColor: "#F3F4F6", 
   },
   headerContainer: {
     paddingTop: 60,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
   scrollContent: {
     paddingHorizontal: 24,
     paddingTop: 24,
-    paddingBottom: 100, // Margem de segurança para o rodapé flutuante
+    paddingBottom: 100, 
   },
   cardTotal: {
     backgroundColor: "#F8FAFC",

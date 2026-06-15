@@ -1,14 +1,15 @@
-// context/AuthContext.tsx
+
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { jwtDecode } from "jwt-decode";
-import api from "../api" // Importa a instância do Axios configurada para a API
+import api from "../api" 
 
 type Role = "ADMIN" | "HR" | "EMPLOYEE";
 
 interface TokenPayload {
   sub: string;
   role: Role;
+  employeeId: number | null; 
   exp: number;
   iss: string;
 }
@@ -16,7 +17,7 @@ interface TokenPayload {
 interface AuthContextData {
   isAuthenticated: boolean;
   loading: boolean;
-  user: { login: string; role: Role } | null;
+  user: { login: string; role: Role; employeeId: number | null } | null; 
   login: (login: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -25,10 +26,10 @@ export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<{ login: string; role: Role } | null>(null);
+  const [user, setUser] = useState<{ login: string; role: Role; employeeId: number | null } | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Ao abrir o app, verifica se já existe token salvo
+
   useEffect(() => {
     (async () => {
       const token = await AsyncStorage.getItem("@token");
@@ -36,12 +37,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         try {
           const decoded = jwtDecode<TokenPayload>(token);
 
-          // Verifica se o token não expirou
+
           const isExpired = decoded.exp * 1000 < Date.now();
           if (isExpired) {
             await AsyncStorage.removeItem("@token");
           } else {
-            setUser({ login: decoded.sub, role: decoded.role });
+            setUser({ login: decoded.sub, role: decoded.role, employeeId: decoded.employeeId });
             setIsAuthenticated(true);
           }
         } catch {
@@ -59,7 +60,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     await AsyncStorage.setItem("@token", token);
 
     const decoded = jwtDecode<TokenPayload>(token);
-    setUser({ login: decoded.sub, role: decoded.role });
+    setUser({ login: decoded.sub, role: decoded.role, employeeId: decoded.employeeId });
     setIsAuthenticated(true);
   };
 

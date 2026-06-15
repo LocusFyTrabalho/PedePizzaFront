@@ -2,7 +2,7 @@ import React from "react";
 import { Modal, View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles";
 
-// 1. Defina a interface (ou tipo) das props
+
 interface CustomModalProps {
   visible: boolean;
   title: string;
@@ -10,7 +10,7 @@ interface CustomModalProps {
   onClose: () => void;
 }
 
-// 2. Aplique a interface ao componente
+
 export const CustomModal: React.FC<CustomModalProps> = ({ 
   visible, 
   title, 

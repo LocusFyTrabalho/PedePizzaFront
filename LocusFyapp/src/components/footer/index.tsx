@@ -41,11 +41,11 @@ const FooterComponent = () => {
 
   const handleLogout = () => {
     Alert.alert(
-      "Sair",
-      "Tem certeza que deseja sair?",
+      "Exit",
+      "Are you sure to want loggout?",
       [
-        { text: "Cancelar", style: "cancel" },
-        { text: "Sair", style: "destructive", onPress: logout },
+        { text: "Cancel", style: "cancel" },
+        { text: "Exit", style: "destructive", onPress: logout },
       ]
     );
   };
@@ -65,7 +65,7 @@ const FooterComponent = () => {
 
       <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
         <Ionicons name="log-out-outline" size={24} color="#ffffff" />
-        <Text style={styles.menuLabel}>Sair</Text>
+        <Text style={styles.menuLabel}>Exit</Text>
       </TouchableOpacity>
     </View>
   );

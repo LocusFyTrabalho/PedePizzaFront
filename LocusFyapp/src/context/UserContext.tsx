@@ -1,10 +1,11 @@
 import React, { createContext, useState, useEffect, ReactNode } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import api from "@/api"; 
 
 export interface UnifiedUserEmployee {
   id: string;
   login: string;
-  role: "ROLE_EMPLOYEE" | "ROLE_HR" | "ROLE_MANAGER";
+  role: "EMPLOYEE" | "HR" | "ADMIN";
   password?: string;
   name: string;
   email: string;
@@ -46,13 +47,33 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const addUser = async (newUser: Omit<UnifiedUserEmployee, "id">) => {
-    const dataWithId: UnifiedUserEmployee = {
-      ...newUser,
-      id: Math.random().toString(36).substring(2, 9),
-    };
-    await saveToStorage([...users, dataWithId]);
+const addUser = async (newUser: Omit<UnifiedUserEmployee, "id">) => {
+
+  const employeeResponse = await api.post('/employee', {
+    id: null,
+    name: newUser.name,
+    email: newUser.email,
+    salary: Number(newUser.hourlyRate),
+    workedHours: null,
+  });
+
+  const employeeId = employeeResponse.data.id;
+
+
+  await api.post('/auth/register', {
+    login: newUser.login,
+    password: newUser.password,
+    role: newUser.role,
+    employeeId: employeeId,
+  });
+
+
+  const dataWithId: UnifiedUserEmployee = {
+    ...newUser,
+    id: Math.random().toString(36).substring(2, 9),
   };
+  await saveToStorage([...users, dataWithId]);
+};  
 
   const updateUser = async (id: string, updatedData: Partial<UnifiedUserEmployee>) => {
     const updatedList = users.map((u) => (u.id === id ? { ...u, ...updatedData } : u));

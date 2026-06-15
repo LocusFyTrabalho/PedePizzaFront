@@ -3,17 +3,17 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        backgroundColor: "rgba(0, 0, 0, 0.4)", // Fundo escurecido semi-transparente
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
         justifyContent: "center",
         alignItems: "center",
     },
     container: {
         width: "85%",
         backgroundColor: "#FFFFFF",
-        borderRadius: 32, // Bordas bem arredondadas como no print
+        borderRadius: 32, 
         padding: 24,
         alignItems: "center",
-        // Sombra leve para dar profundidade
+      
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     },
     content: {
         width: "100%",
-        gap: 12, // Cria espaçamento automático entre os botões inseridos
+        gap: 12, 
         marginBottom: 16,
     },
     closeButton: {

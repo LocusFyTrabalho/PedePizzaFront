@@ -1,31 +1,108 @@
-import React, { useContext } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
-import { styles } from "./styles"; 
+import React, { useEffect, useState } from "react";
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl } from "react-native";
+import { styles } from "./styles";
 import { Ionicons } from "@expo/vector-icons";
-import { UserContext } from "@/context/UserContext";
 import FooterComponent from "@/components/footer";
+import api from "@/api";
+
+interface EmployeeDTO {
+  id: number;
+  name: string;
+  email: string;
+  salary: number;
+  workedHours: string | null;
+}
+
+interface PointRecordDTO {
+  id: number;
+  startTime: string | null;
+  endTime: string | null;
+  date: string;
+  employeeId: number;
+  latitude: number | null;
+  longitude: number | null;
+}
+
+interface TrackedEmployee {
+  id: number;
+  name: string;
+  status: "Working" | "Off";
+  date: string;
+  time: string;
+  coords: { latitude: number; longitude: number } | null;
+}
 
 const EmployeeListView = ({ navigation }: any) => {
-  const { users } = useContext(UserContext);
+  const [employees, setEmployees] = useState<TrackedEmployee[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
-  // Filtra para garantir que apenas funcionários comuns (ROLE_EMPLOYEE) apareçam na tela de tracking
-  const trackedEmployees = users
-    .filter((user) => user.role === "ROLE_EMPLOYEE")
-    .map((user, index) => {
-      const isWorking = index % 2 === 0; 
-      
-      return {
-        id: user.id,
-        name: user.name,
-        status: isWorking ? ("Working" as const) : ("Not Working" as const),
-        date: "Today - June 14",
-        time: isWorking ? "08:00" : "--:--",
-        lastLocation: isWorking ? "Av. Tancredo Neves, 3500" : "Not Clocked In",
-        coords: { latitude: -19.53052 - (index * 0.005), longitude: -42.623308 + (index * 0.005) }
-      };
-    });
+  useEffect(() => {
+    loadData();
+  }, []);
 
-  const renderEmployeeItem = ({ item }: { item: typeof trackedEmployees[0] }) => {
+  const loadData = async () => {
+    try {
+      const [employeesRes, pointsRes] = await Promise.all([
+        api.get<EmployeeDTO[]>('/employee'),
+        api.get<PointRecordDTO[]>('/point'),
+      ]);
+
+      const employeesList = employeesRes.data;
+      const points = pointsRes.data;
+
+      const tracked: TrackedEmployee[] = employeesList.map((emp) => {
+
+        const openRecord = points
+          .filter((p) => p.employeeId === emp.id && p.endTime === null)
+          .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+
+        if (openRecord) {
+          return {
+            id: emp.id,
+            name: emp.name,
+            status: "Working" as const,
+            date: openRecord.date,
+            time: openRecord.startTime ?? "--:--",
+            coords: (openRecord.latitude != null && openRecord.longitude != null)
+              ? { latitude: openRecord.latitude, longitude: openRecord.longitude }
+              : null,
+          };
+        }
+
+        return {
+          id: emp.id,
+          name: emp.name,
+          status: "Off" as const,
+          date: "-",
+          time: "--:--",
+          coords: null,
+        };
+      });
+
+      // Ordena: "Working" primeiro, depois "Off". Dentro de cada grupo, ordena por nome.
+      const sorted = tracked.sort((a, b) => {
+        if (a.status !== b.status) {
+          return a.status === "Working" ? -1 : 1;
+        }
+        return a.name.localeCompare(b.name);
+      });
+
+      setEmployees(sorted);
+    } catch (error: any) {
+      console.error(error.response?.data || error.message);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    loadData();
+  };
+
+  const renderEmployeeItem = ({ item }: { item: TrackedEmployee }) => {
     const isWorking = item.status === "Working";
 
     return (
@@ -40,7 +117,11 @@ const EmployeeListView = ({ navigation }: any) => {
 
         <View style={styles.infoRow}>
           <Ionicons name="location-outline" size={22} color="#000" style={styles.icon} />
-          <Text style={styles.infoText}>{item.lastLocation}</Text>
+          <Text style={styles.infoText}>
+            {isWorking && item.coords
+              ? `Lat: ${item.coords.latitude.toFixed(5)}, Lng: ${item.coords.longitude.toFixed(5)}`
+              : "Not Clocked In"}
+          </Text>
         </View>
 
         <View style={styles.cardFooter}>
@@ -50,8 +131,8 @@ const EmployeeListView = ({ navigation }: any) => {
           </View>
 
           <TouchableOpacity
-            style={[styles.mapButton, !isWorking && { backgroundColor: "#9CA3AF" }]}
-            disabled={!isWorking}
+            style={[styles.mapButton, !(isWorking && item.coords) && { backgroundColor: "#9CA3AF" }]}
+            disabled={!(isWorking && item.coords)}
             onPress={() => navigation.navigate("Mapa", {
               employeeName: item.name,
               employeeCoords: item.coords
@@ -64,6 +145,14 @@ const EmployeeListView = ({ navigation }: any) => {
     );
   };
 
+  if (loading) {
+    return (
+      <View style={[styles.container, { justifyContent: "center", alignItems: "center" }]}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
@@ -73,20 +162,21 @@ const EmployeeListView = ({ navigation }: any) => {
         <Text style={styles.sloganText}>Employee Tracking</Text>
       </View>
 
-      {trackedEmployees.length === 0 ? (
+      {employees.length === 0 ? (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingHorizontal: 40 }}>
           <Text style={{ color: "#6B7280", textAlign: "center", fontSize: 16 }}>
-            No employees currently working or registered.
+            No employees registered.
           </Text>
         </View>
       ) : (
         <FlatList
-          data={trackedEmployees}
-          keyExtractor={(item) => item.id}
+          data={employees}
+          keyExtractor={(item) => item.id.toString()}
           renderItem={renderEmployeeItem}
           contentContainerStyle={[styles.scrollContent, { paddingHorizontal: 24, paddingBottom: 120 }]}
           style={styles.formScrollView}
           showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         />
       )}
 

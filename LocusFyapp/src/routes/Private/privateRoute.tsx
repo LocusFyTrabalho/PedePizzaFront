@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { View, ActivityIndicator } from "react-native"; // Importado para a tela de segurança
+import { View, ActivityIndicator } from "react-native"; 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PrivateStackParamList } from "@/routes/types";
 import { AuthContext } from "@/context/AuthContext";
 
-// Seus imports de Views permanecem iguais...
+
 import HomeView from "@/views/homeView";
 import PerfilView from "@/views/perfilView";
 import MyHoursView from "@/views/myHoursView";
@@ -31,7 +31,7 @@ export const PrivateRoutes = () => {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {/* Telas exclusivas de EMPLOYEE */}
+
       {user.role === "EMPLOYEE" && (
         <>
           <Stack.Screen name="Home" component={HomeView} />
@@ -40,7 +40,7 @@ export const PrivateRoutes = () => {
         </>
       )}
 
-      {/* Telas exclusivas de HR */}
+
       {user.role === "HR" && (
         <>
           <Stack.Screen name="ListaUsuario" component={UsersListView} />
@@ -48,7 +48,7 @@ export const PrivateRoutes = () => {
         </>
       )}
 
-      {/* Telas exclusivas de MANAGER */}
+
       {user.role === "ADMIN" && (
         <>
           <Stack.Screen name="Dashboard" component={DashboardView} />

@@ -1,4 +1,4 @@
-// services/userService.ts
+
 import api from '../api';
 
 export interface NovoFuncionario {
@@ -12,7 +12,7 @@ export interface NovoFuncionario {
 export interface NovoAcesso {
   login: string;
   password: string;
-  role: string; // PRECISO confirmar os valores do enum UserRole
+  role: string; 
 }
 
 export async function criarFuncionario(dados: Omit<NovoFuncionario, 'id' | 'workedHours'>) {

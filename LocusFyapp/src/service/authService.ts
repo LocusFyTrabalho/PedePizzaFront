@@ -1,10 +1,10 @@
-// services/authService.ts
-import api from '../api'; // Importa a instância do Axios configurada para a API
+
+import api from '../api'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode } from 'jwt-decode';
 
 interface TokenPayload {
-  sub: string; // geralmente o "login" do usuário
+  sub: string; 
   role?: string;
   exp: number;
   [key: string]: any;
@@ -12,7 +12,7 @@ interface TokenPayload {
 
 export async function login(loginUsuario: string, password: string) {
   const response = await api.post('/auth/login', { login: loginUsuario, password });
-  const { token } = response.data; // LoginResponseDTO -> { token: string }
+  const { token } = response.data; 
 
   await AsyncStorage.setItem('@token', token);
 
