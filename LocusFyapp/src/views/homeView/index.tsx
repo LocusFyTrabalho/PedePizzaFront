@@ -42,18 +42,29 @@ const HomeView = () => {
     const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [initializing, setInitializing] = useState<boolean>(true);
+    const [employeeName, setEmployeeName] = useState<string>("");
 
-    // Verifica se já existe um ponto aberto ao carregar a tela
+    const getGreeting = (): string => {
+        const hour = new Date().getHours();
+        if (hour < 12) return "Good Morning";
+        if (hour < 18) return "Good Afternoon";
+        return "Good Evening";
+    };
+
     useEffect(() => {
         checkCurrentStatus();
     }, []);
 
     const checkCurrentStatus = async () => {
         try {
-            const response = await api.get<PointRecordDTO[]>('/point/me');
-            const records = response.data;
+            const [statusRes, employeeRes] = await Promise.all([
+                api.get<PointRecordDTO[]>('/point/me'),
+                api.get<{ name: string }>('/employee/me'),
+            ]);
 
-            // /point/me já vem ordenado por data desc; o primeiro é o mais recente
+            setEmployeeName(employeeRes.data.name);
+
+            const records = statusRes.data;
             const openRecord = records.find((r) => r.endTime === null);
 
             if (openRecord) {
@@ -172,7 +183,6 @@ const HomeView = () => {
             setShowConfirmModal(false);
 
             if (working) {
-                // Acabou de dar Clock Out -> zera o cronômetro
                 setSeconds(0);
             }
 
@@ -212,7 +222,9 @@ const HomeView = () => {
     return (
         <View style={localStyles.screenContainer}>
             <View style={localStyles.headerContainer}>
-                <Text style={localStyles.greetingText}>Good Morning</Text>
+                <Text style={localStyles.greetingText}>
+                    {getGreeting()}{employeeName ? `, ${employeeName}` : ""}
+                </Text>
                 <Text style={localStyles.statusLabelText}>
                     {working ? "Working for" : "Off Duty"}
                 </Text>

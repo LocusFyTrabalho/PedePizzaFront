@@ -47,6 +47,8 @@ const MyHoursView = () => {
 
     useEffect(() => {
         loadData();
+        console.log("EMPLOYEE:", JSON.stringify(employee));
+        console.log("RECORDS:", JSON.stringify(records));
     }, []);
 
     const loadData = async () => {
